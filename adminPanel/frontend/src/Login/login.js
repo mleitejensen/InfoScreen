@@ -5,7 +5,7 @@ function Login(){
         <div className="login">
             <form>
                 <div className="formTitle">Login</div>
-                <label for="">Username</label><br/>
+                <label>Username</label><br/>
                 <input type="text"></input><br/>
                 <label>Password</label><br/>
                 <input type="password"></input><br/>

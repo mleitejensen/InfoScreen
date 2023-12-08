@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-function App() {
+function Test() {
   const [message, setMessage] = useState('');
   useEffect(() => {
-    fetch('/')
+    fetch('http://localhost:9000')
       .then((res) => res.text())
       .then((data) => setMessage(data))
       .catch((err) => console.log(err));
@@ -14,4 +14,4 @@ function App() {
     </div>
   );
 }
-export default App;
+export default Test;

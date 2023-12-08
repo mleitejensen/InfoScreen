@@ -5,7 +5,7 @@ function Signup(){
         <div className="signup">
             <form>
                 <div className="formTitle">Sign up</div>
-                <label for="">Username</label><br/>
+                <label>Username</label><br/>
                 <input type="text"></input><br/>
                 <label>Password</label><br/>
                 <input type="password"></input><br/>
