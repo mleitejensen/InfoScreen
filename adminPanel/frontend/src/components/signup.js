@@ -1,18 +1,16 @@
-import "./login.css"
-
-function Login(){
+const Signup = () => {
     return(
-        <div className="login">
+        <div className="signup">
             <form>
-                <div className="formTitle">Login</div>
+                <div className="formTitle">Sign up</div>
                 <label>Username</label><br/>
                 <input type="text"></input><br/>
                 <label>Password</label><br/>
                 <input type="password"></input><br/>
-                <button type="submit">Login</button>
+                <button type="submit">Sign up</button>
             </form>
         </div>
     )
 }
 
-export default Login
+export default Signup

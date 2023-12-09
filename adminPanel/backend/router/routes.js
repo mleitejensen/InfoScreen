@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const router = Router()
+const userController = require("../controllers/userController")
 
-router.get("/", (req, res) =>{
-    res.send("Sending test message from localhost:9000/")
-} )
+router.get("/api", userController.users_get)
 
 module.exports = router
