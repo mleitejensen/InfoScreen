@@ -1,48 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Users = () => {
-
     const [users, setUsers] = useState()
+    
+    useEffect(() => {
+        makeAPICall()
+      },[])
+
+
+
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/api', {mode:'cors'});
+            const response = await fetch('http://localhost:9000/api/users', {mode:'cors'});
             let data = await response.json();
-            data = data.users
             setUsers(data)
-
-            /*
-            data.forEach(e => {
-                users.push(e)
-            });
-            */
         }
         catch (e) {
             console.log(e)
         }
-      }
-
-      makeAPICall()
-
-      console.log(users)
-      //console.log(users)
-      /*
-      useEffect(() => {
-        makeAPICall();
-      }, [])
-      */
-
-
+    }
 
     return(
-        <div className="Users">
-            <div>
-                {users && users.userName.map((value, key) => {
-                    <div>
-                        <div>{value.status}</div>
-                        <div>{value.count}</div>
+        <div className="users">
+               {users && users.map((user) => (
+                    <div className="userPreview" key={user._id}>
+                        <h2>{user.username}</h2>
+                        <h2>{user.admin}</h2>
                     </div>
-                })}
-            </div>
+               ))}
+               {!users && "Loading..."}
         </div>
     )
 }
