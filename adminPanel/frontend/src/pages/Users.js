@@ -6,12 +6,10 @@ const Users = () => {
     useEffect(() => {
         makeAPICall()
       },[])
-
-
-
+      
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/api/users', {mode:'cors'});
+            const response = await fetch('http://localhost:9000/api/users',);
             let data = await response.json();
             setUsers(data)
         }
@@ -22,6 +20,10 @@ const Users = () => {
 
     return(
         <div className="users">
+            <div className="listTitle">
+                <h2>Username</h2>
+                <h2>Admin</h2>
+            </div>
                {users && users.map((user) => (
                     <div className="userPreview" key={user._id}>
                         <h2>{user.username}</h2>
