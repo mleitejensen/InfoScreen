@@ -2,8 +2,8 @@ const User = require("../models/userModel")
 const mongoose = require("mongoose")
 
 const getUsers = async (req, res) => {
-    //res.set('Access-Control-Allow-Origin', '*');
-    const users = await User.find({}).sort({username: -1})
+    res.set('Access-Control-Allow-Origin', '*');
+    const users = await User.find({}).sort({username: +1})
    
     res.status(200).json(users)
 }
