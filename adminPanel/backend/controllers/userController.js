@@ -2,14 +2,14 @@ const User = require("../models/userModel")
 const mongoose = require("mongoose")
 
 const getUsers = async (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    const users = await User.find({}).sort({username: +1})
-   
-    res.status(200).json(users)
+  const users = await User.find({}).sort({username: +1})
+  
+  res.status(200).json(users)
 }
 
 const createUser = async (req, res) => {
-    const { username, password, admin } = req.body;
+  
+  const { username, password, admin } = req.body;
 
   try {
     const user = await User.create({ username, password, admin });

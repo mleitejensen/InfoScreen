@@ -3,10 +3,19 @@ const express = require("express")
 const mongoose = require('mongoose')
 const app = express()
 const routes = require("./router/routes")
-const dbURI = process.env.DBURI
+const cors = require("cors")
+const dbURI = process.env.DB_URI
 const port = process.env.PORT
 
 app.use(express.json())
+
+/*
+var corsOptions = {
+    origin: 'http://localhost:3000',
+}
+*/
+
+app.use(cors())
 
 app.listen(port)
 
