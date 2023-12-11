@@ -6,15 +6,14 @@ const Signup = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
-    const [result, setResult] = useState('')
+    const [result, setResult] = useState(null)
     
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
         setError(null)
-        setResult('')
+        setResult(null)
     
-
         const response = await fetch('http://localhost:9000/api/create',{
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
@@ -25,18 +24,13 @@ const Signup = () => {
         if (!response.ok) {
         setIsLoading(false)
         setError(json.error)
-        console.log(json.error)
         }
         if (response.ok) {
         setIsLoading(false)
-        setResult("User created")
+        setResult(json.result)
         }
         
-        const removeResult = (() => {
-            setResult('')
-        })
-
-        setTimeout(removeResult(), 2000)
+        //setTimeout(removeResult(), 2000)
     }
 
     return(
