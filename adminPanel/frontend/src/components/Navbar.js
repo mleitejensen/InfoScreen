@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Navbar = () => {
+  const { user } = useAuthContext
 
   return (
     <header>
@@ -14,7 +16,20 @@ const Navbar = () => {
         <Link to="/">
           <h1>Logout</h1>
         </Link>
-        <h1>Username</h1>
+        <nav>
+          {user && (
+            <div>
+              <span>{user.username}</span>
+            </div>
+          )}
+          {!user && (
+            <div>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Signup</Link>
+            </div>
+          )}
+        </nav>
+        
       </div>
     </header>
   )
