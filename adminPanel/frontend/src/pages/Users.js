@@ -9,7 +9,7 @@ const Users = () => {
       
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/api/users',);
+            const response = await fetch('http://localhost:9000/users',);
             let data = await response.json();
             setUsers(data)
         }
