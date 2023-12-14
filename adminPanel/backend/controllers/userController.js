@@ -1,6 +1,7 @@
-const User = require("../models/userModel")
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
+const User = require("../models/userModel")
+const InfoScreen = require("../models/infoScreenModel")
 
 const createWebToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '1d' })
@@ -34,9 +35,31 @@ const loginUser = async (req, res) => {
   }
 }
 
+const createElement = async (req, res) => {
+  const {value, order} = req.body
+
+  try{
+    const element = await InfoScreen.create({value, order})
+    res.status(200).json(element)
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
+const getElements = async (req, res) => {
+  try{
+    const elements = await InfoScreen.find({}).sort({order: +1})
+    res.status(200).json(elements)
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
 module.exports = {
   getUsers,
   createUser,
   loginUser,
+  createElement,
+  getElements,
 }
 
