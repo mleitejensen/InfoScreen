@@ -1,29 +1,42 @@
 const User = require("../models/userModel")
 const mongoose = require("mongoose")
+const jwt = require("jsonwebtoken")
+
+const createWebToken = (_id) => {
+  return jwt.sign({_id}, process.env.SECRET, { expiresIn: '1d' })
+}
 
 const getUsers = async (req, res) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    const users = await User.find({}).sort({username: +1})
-   
-    res.status(200).json(users)
+  const users = await User.find({}).sort({username: +1})
+  res.status(200).json(users)
 }
 
 const createUser = async (req, res) => {
-    const { username, password, admin } = req.body;
+  const { username, password } = req.body;
 
-  try {
-    const user = await User.create({ username, password, admin });
-    res.status(201).json({ user: user._id });
-  }
-  catch(err) {
-    console.log(err)
-    res.status(400).json({ err });
+  try{
+    const user = await User.signup(username, password)
+    res.status(200).json({ result: `${user.username} created`})
+  }catch (error) {
+    res.status(400).json({ error: error.message })
   }
 }
 
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try{
+    const user = await User.login(username, password)
+    const token = createWebToken(user._id)
+    res.status(200).json({username, token})
+  }catch(error){
+    res.status(400).json({ error: error.message })
+  }
+}
 
 module.exports = {
-    getUsers,
-    createUser,
+  getUsers,
+  createUser,
+  loginUser,
 }
 

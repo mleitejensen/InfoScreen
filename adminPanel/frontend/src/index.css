@@ -46,8 +46,7 @@ header a {
 }
 
 .login button{
-  position: relative;
-  top: 30px;
+  margin-top: 20px;
 }
 
 .login, .login input, .login button{
@@ -63,8 +62,7 @@ header a {
 }
 
 .signup button{
-  position: relative;
-  top: 30px;
+  margin-top: 20px;
 }
 
 .signup, .signup input, .signup button{
@@ -75,6 +73,23 @@ header a {
 .formTitle{
   font-size: 50px;
   padding: 20px;
+}
+
+.result{
+  top: 40px;
+  background-color: #1aac83;
+  margin-top: 10px;
+  border-radius: 8px;
+  text-align: center;
+  color: #f1f1f1;
+}
+
+.error{
+  background-color: #e7195a;
+  margin-top: 10px;
+  border-radius: 8px;
+  text-align: center;
+  color: #f1f1f1;
 }
 
 .userPreview{
