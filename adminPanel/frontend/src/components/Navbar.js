@@ -20,7 +20,7 @@ const Navbar = () => {
           <h1>Order</h1>
         </Link>
         <Link to="/">
-          <h1>Logout</h1>
+          <h1>Loigin / Signup</h1>
         </Link>
         <nav>
         {user && (
