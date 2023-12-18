@@ -1,6 +1,7 @@
-const User = require("../models/userModel")
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
+const User = require("../models/userModel")
+const InfoScreen = require("../models/infoScreenModel")
 
 const createWebToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '1d' })
@@ -33,6 +34,8 @@ const loginUser = async (req, res) => {
     res.status(400).json({ error: error.message })
   }
 }
+
+
 
 module.exports = {
   getUsers,

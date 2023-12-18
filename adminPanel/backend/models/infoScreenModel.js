@@ -1,25 +1,11 @@
 const mongoose = require('mongoose');
 
 const infoSchema = new mongoose.Schema({
-  image: {
-    type: String,
-    unique: true,
-  },
-  video: {
-    type: String,
-    unique: true,
-  },
-  text: {
-    type: String,
-    unique: true,
-  },
-  index: {
-    type: Number,
-    unique: true,
-    required: true,
-  }
-});
+    type: {type: String},
+    value: {type: String},
+    order: {type: Number,}
+}, {unique: true});
 
-const InfoScreen = mongoose.model('infoScreen', infoSchema);
+const InfoScreen = mongoose.model('info-element', infoSchema);
 
 module.exports = InfoScreen;

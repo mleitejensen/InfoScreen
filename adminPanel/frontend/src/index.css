@@ -118,3 +118,11 @@ header a {
   text-align: center;
   border: 1px solid;
 }
+
+.elementPreview{
+  display: inline-block;
+}
+
+.orderElement{
+  padding: 2px;
+}
