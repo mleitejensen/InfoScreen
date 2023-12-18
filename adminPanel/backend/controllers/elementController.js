@@ -1,10 +1,12 @@
 const InfoScreen = require("../models/infoScreenModel")
 
 const createElement = async (req, res) => {
-    const {type, value, order} = req.body
-  
+    const {type, value} = req.body
+    
+    const elements = await InfoScreen.find({})
+
     try{
-      const element = await InfoScreen.create({type, value, order})
+      const element = await InfoScreen.create({type, value, order: (elements.length + 1)})
       res.status(200).json(element)
     }catch(error){
       res.status(400).json({error: error.message})

@@ -3,6 +3,7 @@ const express = require("express")
 const mongoose = require('mongoose')
 const app = express()
 const userRoutes = require("./router/userRoutes")
+const orderRoutes = require("./router/orderRouter")
 const cors = require("cors")
 const dbURI = process.env.DB_URI
 const port = process.env.PORT
@@ -28,3 +29,4 @@ mongoose.connect(dbURI)
     })
 
 app.use(userRoutes)
+app.use(orderRoutes)
