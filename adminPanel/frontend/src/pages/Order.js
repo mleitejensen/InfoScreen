@@ -60,9 +60,9 @@ const Order = () => {
           <option value="img">Image</option>
           <option value="text">Text</option>
           <option value="video">Video</option>
-        </select>
+        </select><br />
         <label>Write content</label><br />
-        <input type="text" name="content" onChange={(e) => setContent(e.target.value)}></input><br />
+        <input type="text" name="content" onChange={(e) => setContent(e.target.value)}></input><br /><br />
 
         <button disabled={isLoading}>Upload</button>
         {error && <div className="error">{error}</div>}
