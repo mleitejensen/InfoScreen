@@ -54,8 +54,8 @@ function App() {
     <div className="App">
       <header className="App-header">
           {currentElement && 
-          <div>
-            <img src={currentElement.value} alt="current element"></img>
+          <div className='image'>
+            <img src={currentElement.value} alt="current element" className='center-fit'></img>
             <p>{currentElement.value}</p>
           </div>
           }
