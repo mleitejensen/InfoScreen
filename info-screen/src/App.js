@@ -53,14 +53,22 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-          {currentElement && 
-          <div className='image'>
-            <img src={currentElement.value} alt="current element" className='center-fit'></img>
-            <p>{currentElement.value}</p>
-          </div>
+          {currentElement &&
+            <div>
+            {currentElement.type === "img" && 
+              <img src={currentElement.value} alt="current element" className='image'></img>
+            }
+            {currentElement.type === "text" && 
+              <div>
+                <p className='text'>{currentElement.value}</p>
+                <iframe width="1920" height="1080" src="https://www.youtube.com/embed/5Peo-ivmupE?si=iY3jtIYj3Oh3ruxa&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+            }
+            </div>
           }
+          
           {!currentElement && 
-            <p>Loading...</p>
+            <p className='text'>Loading...</p>
           }
       </header>
     </div>

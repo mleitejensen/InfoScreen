@@ -54,7 +54,7 @@ const Order = () => {
   return (
     <div className="order">
       <form onSubmit={handleSubmit}>
-        <div className="formTitle">Sign up</div>
+        <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
           <option value="img">Image</option>
@@ -69,16 +69,28 @@ const Order = () => {
         {result && <div className="result">{result}</div>}
 
       </form>
-      <br /><br /><br /><br /><br />
+      <br /><br />
+      <h2>Order of elements on info screen</h2>
       {elements && elements.map((element) => (
         <div className="elementPreview" key={element._id}>
-          <img src={element.value} alt="Random" width="100" height="100" className="orderElement"></img>
+          {element.type === "img" && 
+          <div className="orderElement">
+            <img src={element.value} alt="Random" width="100" height="100"></img>
+            <p className="orderNumber">{element.order}</p>
+          </div>
+          }
+          {element.type === "text" && 
+          <div className="orderElement">
+            <p>{element.value}</p>
+            <p className="orderNumber">{element.order}</p>
+            </div>
+          }
         </div>
       ))}
 
-      <h2>Order of elements on info screen</h2>
-
-      {!elements && "Loading image..."}
+      {!elements && 
+        <div>Loading image...</div>
+      }
     </div>
   )
 }
