@@ -73,13 +73,13 @@ const Order = () => {
       <h2>Order of elements on info screen</h2>
       {elements && elements.map((element) => (
         <div className="elementPreview" key={element._id}>
-          {element.type == "img" && 
+          {element.type === "img" && 
           <div className="orderElement">
             <img src={element.value} alt="Random" width="100" height="100"></img>
             <p className="orderNumber">{element.order}</p>
           </div>
           }
-          {element.type == "text" && 
+          {element.type === "text" && 
           <div className="orderElement">
             <p>{element.value}</p>
             <p className="orderNumber">{element.order}</p>
@@ -88,7 +88,9 @@ const Order = () => {
         </div>
       ))}
 
-      {!elements && "Loading image..."}
+      {!elements && 
+        <div>Loading image...</div>
+      }
     </div>
   )
 }
