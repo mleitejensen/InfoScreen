@@ -5,7 +5,7 @@ const Order = () => {
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
   const [musicContent, setMusicContent] = useState('')
-  const [type, setType] = useState('image')
+  const [type, setType] = useState('text')
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -32,7 +32,6 @@ const Order = () => {
     setIsLoading(true)
     setError(null)
     setResult(null)
-
 
     const response = await fetch('http://localhost:9000/order/create', {
       method: 'POST',
@@ -95,8 +94,8 @@ const Order = () => {
         <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-          <option value="image">Image</option>
           <option value="text">Text</option>
+          <option value="image">Image</option>
           <option value="video">Video</option>
         </select><br />
         <label>Write content</label><br />
@@ -123,7 +122,7 @@ const Order = () => {
         <div className="elementPreview" key={element._id}>
           {element.type === "image" && 
           <div className="orderElement">
-            <img src={element.value} alt="Incorrect image url" width="100" height="100"></img>
+            <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
             <p className="orderNumber">{element.order}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
           </div>
@@ -131,6 +130,13 @@ const Order = () => {
           {element.type === "text" && 
           <div className="orderElement">
             <p>{element.value}</p>
+            <p className="orderNumber">{element.order}</p>
+            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            </div>
+          }
+          {element.type === "video" && 
+          <div className="orderElement">
+            <iframe width="560" height="315" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             <p className="orderNumber">{element.order}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             </div>
