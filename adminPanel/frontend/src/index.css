@@ -125,6 +125,8 @@ header a {
 
 .orderElement{
   padding: 2px;
+  padding-left: 40px;
   margin: 2px;
-  border: red 2px solid;
+  background-color: #dad6d6;
+  border-radius: 15px;
 }
