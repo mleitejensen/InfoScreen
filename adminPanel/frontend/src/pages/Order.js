@@ -99,7 +99,15 @@ const Order = () => {
           <option value="video">Video</option>
         </select><br />
         <label>Write content</label><br />
-        <input type="text" name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input><br /><br />
+        {type === "text" && 
+          <input type="text" placeholder="write anything..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }
+        {type === "image" && 
+          <input type="text" placeholder="google.com/d3423431..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }
+        {type === "video" && 
+          <input type="text" placeholder="youtube.com/..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }        
 
         <button disabled={isLoading}>Upload</button>
       </form>
@@ -107,7 +115,7 @@ const Order = () => {
       <form onSubmit={uploadMusic}>
         <div>Upload background music</div>
         <label>Upload a youtube url here</label>
-        <input type="text" placeholder="https://youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
+        <input type="text" placeholder="youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
 
         <button disabled={isLoading}>Upload</button>
         
