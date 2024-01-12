@@ -8,7 +8,21 @@ function App() {
 
   useEffect(() => {
     makeAPICall()
-  }, [])
+    changeCurrentElement(index)
+    console.log(index)
+    console.log("elements length is: " + ((elements?.length === undefined)? 10 : elements.length))
+    //Implementing the setInterval method
+    const timer = setInterval(() => {
+      if(index < ((elements?.length === undefined)? 10 : elements.length)){
+        setIndex(index + 1);
+      } else{
+        setIndex(0);
+      }
+       
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [index]);
 
   const makeAPICall = async () => {
     try {
@@ -29,20 +43,7 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    changeCurrentElement(index)
-    //Implementing the setInterval method
-    const timer = setInterval(() => {
-      if(index <= 10){
-        setIndex(index + 1);
-      } else{
-        setIndex(0);
-      }
-       
-    }, 3000);
-
-    return () => clearInterval(timer);
-  }, [index]);
+ 
 
   
   return (

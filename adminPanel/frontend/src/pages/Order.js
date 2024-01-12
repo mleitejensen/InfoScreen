@@ -112,9 +112,8 @@ const Order = () => {
         <button disabled={isLoading}>Upload</button>
       </form>
 
-      <form onSubmit={uploadMusic}>
-        <div>Upload background music</div>
-        <label>Upload a youtube url here</label>
+      <form className="musicForm" onSubmit={uploadMusic}>
+        <label>Upload a youtube url here to use as background music</label><br/>
         <input type="text" placeholder="youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
 
         <button disabled={isLoading}>Upload</button>
@@ -128,22 +127,25 @@ const Order = () => {
       <h2>Order of elements on info screen</h2>
       {elements && elements.map((element) => (
         <div className="elementPreview" key={element._id}>
-          {element.type === "image" && 
-          <div className="orderElement">
-            <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
-            <p className="orderNumber">{element.order}</p>
-            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
-          </div>
-          }
           {element.type === "text" && 
           <div className="orderElement">
+            <p>Type: Text</p>
             <p>{element.value}</p>
             <p className="orderNumber">{element.order}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             </div>
           }
+          {element.type === "image" && 
+          <div className="orderElement">
+            <p>Type: Image</p>
+            <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
+            <p className="orderNumber">{element.order}</p>
+            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+          </div>
+          }
           {element.type === "video" && 
           <div className="orderElement">
+            <p>Type: Video</p>
             <iframe width="560" height="315" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             <p className="orderNumber">{element.order}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
