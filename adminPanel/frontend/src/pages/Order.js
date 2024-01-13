@@ -130,25 +130,29 @@ const Order = () => {
           {element.type === "text" && 
           <div className="orderElement">
             <p>Type: Text</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>{element.value}</p>
-            <p className="orderNumber">{element.order}</p>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             </div>
           }
           {element.type === "image" && 
           <div className="orderElement">
             <p>Type: Image</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
             <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
-            <p className="orderNumber">{element.order}</p>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
           </div>
           }
           {element.type === "video" && 
           <div className="orderElement">
             <p>Type: Video</p>
-            <iframe width="560" height="315" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <p className="orderNumber">{element.order}</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
+            <iframe width="280" height="157,5" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            
             </div>
           }
         </div>

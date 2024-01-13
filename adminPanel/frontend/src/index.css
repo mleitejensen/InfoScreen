@@ -138,3 +138,13 @@ header a {
   margin-top: 5px;
   margin-right: 5px;
 }
+
+.orderNumberInput{
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: 5px;
+  width: 30px;
+  position: relative;
+  bottom: 40px;
+}

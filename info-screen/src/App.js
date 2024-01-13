@@ -17,7 +17,7 @@ function App() {
         setIndex(0);
       }
        
-    }, 3000);
+    }, 6000);
 
     return () => clearInterval(timer);
   }, [index]);
@@ -60,7 +60,7 @@ function App() {
             }
             {currentElement.type === "video" && 
               <div>
-                <iframe width="1800" height="950" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "&autoplay=1"} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
               </div>
             }
             </div>
