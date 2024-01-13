@@ -9,8 +9,6 @@ function App() {
   useEffect(() => {
     makeAPICall()
     changeCurrentElement(index)
-    console.log(index)
-    console.log("elements length is: " + ((elements?.length === undefined)? 10 : elements.length))
     //Implementing the setInterval method
     const timer = setInterval(() => {
       if(index < ((elements?.length === undefined)? 10 : elements.length)){
@@ -52,7 +50,7 @@ function App() {
           {currentElement &&
             <div>
             {currentElement.type === "image" && 
-              <img src={currentElement.value} alt="current element" className='image'></img>
+              <img src={currentElement.value} height="900" alt="current element"></img>
             }
             {currentElement.type === "text" && 
               <div>
@@ -62,7 +60,7 @@ function App() {
             }
             {currentElement.type === "video" && 
               <div>
-                <iframe width="1920" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "&autoplay=1"} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                <iframe width="1800" height="950" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "&autoplay=1"} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
               </div>
             }
             </div>
