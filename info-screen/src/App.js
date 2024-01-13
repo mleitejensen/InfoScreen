@@ -50,7 +50,7 @@ function App() {
           {currentElement &&
             <div>
             {currentElement.type === "image" && 
-              <img src={currentElement.value} height="900" alt="current element"></img>
+              <img src={currentElement.value} alt="current element"></img>
             }
             {currentElement.type === "text" && 
               <div>

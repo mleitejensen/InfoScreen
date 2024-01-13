@@ -7,16 +7,17 @@ body{
   color: white;
   font-size: 20px;
   text-align: center;
-  overflow: hidden;
+
 }
-.App-Header{
-  max-width: 1600px;
-}
+
 img{
-  height: auto;
-  width:100%;
-  max-width: 1920px;
+  display: block;
+  margin: auto;
   max-height: 1080px;
+  max-width: 1920px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
 .text{
