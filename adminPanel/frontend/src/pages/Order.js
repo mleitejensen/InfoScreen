@@ -5,7 +5,7 @@ const Order = () => {
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
   const [musicContent, setMusicContent] = useState('')
-  const [type, setType] = useState('image')
+  const [type, setType] = useState('text')
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -32,7 +32,6 @@ const Order = () => {
     setIsLoading(true)
     setError(null)
     setResult(null)
-
 
     const response = await fetch('http://localhost:9000/order/create', {
       method: 'POST',
@@ -95,20 +94,27 @@ const Order = () => {
         <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-          <option value="image">Image</option>
           <option value="text">Text</option>
+          <option value="image">Image</option>
           <option value="video">Video</option>
         </select><br />
         <label>Write content</label><br />
-        <input type="text" name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input><br /><br />
+        {type === "text" && 
+          <input type="text" placeholder="write anything..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }
+        {type === "image" && 
+          <input type="text" placeholder="google.com/d3423431..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }
+        {type === "video" && 
+          <input type="text" placeholder="youtube.com/..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+        }        
 
         <button disabled={isLoading}>Upload</button>
       </form>
 
-      <form onSubmit={uploadMusic}>
-        <div>Upload background music</div>
-        <label>Upload a youtube url here</label>
-        <input type="text" placeholder="https://youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
+      <form className="musicForm" onSubmit={uploadMusic}>
+        <label>Upload a youtube url here to use as background music</label><br/>
+        <input type="text" placeholder="youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
 
         <button disabled={isLoading}>Upload</button>
         
@@ -121,18 +127,32 @@ const Order = () => {
       <h2>Order of elements on info screen</h2>
       {elements && elements.map((element) => (
         <div className="elementPreview" key={element._id}>
+          {element.type === "text" && 
+          <div className="orderElement">
+            <p>Type: Text</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
+            <p>{element.value}</p>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
+            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            </div>
+          }
           {element.type === "image" && 
           <div className="orderElement">
-            <img src={element.value} alt="Incorrect image url" width="100" height="100"></img>
-            <p className="orderNumber">{element.order}</p>
+            <p>Type: Image</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
+            <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
           </div>
           }
-          {element.type === "text" && 
+          {element.type === "video" && 
           <div className="orderElement">
-            <p>{element.value}</p>
-            <p className="orderNumber">{element.order}</p>
+            <p>Type: Video</p>
+            <input className="orderNumberInput" value={element.order} type="number"></input>
+            <iframe width="280" height="157,5" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            
             </div>
           }
         </div>

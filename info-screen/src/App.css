@@ -7,10 +7,24 @@ body{
   color: white;
   font-size: 20px;
   text-align: center;
+  overflow: hidden;
 }
-.image{
-  height: 1080px;
-  width: auto;
+
+img{
+  display: block;
+  margin: auto;
+  max-height: 1080px;
+  max-width: 1920px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+iframe{
+  display: block;
+  
+  max-height: 1080px;
+  max-width: 1920px;
 }
 
 .text{

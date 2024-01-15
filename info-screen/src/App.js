@@ -2,22 +2,31 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-
   const [elements, setElements] = useState(null)
   const [currentElement, setCurrentElement] = useState(null)
   const [index, setIndex] = useState(-1)
-  
 
   useEffect(() => {
     makeAPICall()
-  }, [])
+    changeCurrentElement(index)
+    //Implementing the setInterval method
+    const timer = setInterval(() => {
+      if(index < ((elements?.length === undefined)? 10 : elements.length)){
+        setIndex(index + 1);
+      } else{
+        setIndex(0);
+      }
+       
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [index]);
 
   const makeAPICall = async () => {
     try {
       const response = await fetch('http://localhost:9000/order',);
       let data = await response.json();
       setElements(data)
-
     }
     catch (error) {
       console.log(error)
@@ -31,23 +40,20 @@ function App() {
       console.log(error)
     }
   }
-  
-  //setIndex(i => {})
 
-  useEffect(() => {
-    changeCurrentElement(index)
-    //Implementing the setInterval method
-    const timer = setInterval(() => {
-      if(index <= 3){
-        setIndex(index + 1);
-      } else{
-        setIndex(0);
-      }
-       
-    }, 3000);
-
-    return () => clearInterval(timer);
-  }, [index]);
+  // const test = async () => {
+  //   try {
+  //     let YOUR_API_KEY = ""
+  //     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${currentElement.value.split("?v=")[1]}&part=contentDetails&key=${YOUR_API_KEY}`,);
+  //     let data = await response.json();
+  //     console.log(data)
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+ 
+  // test()
 
   
   return (
@@ -55,13 +61,18 @@ function App() {
       <header className="App-header">
           {currentElement &&
             <div>
-            {currentElement.type === "img" && 
-              <img src={currentElement.value} alt="current element" className='image'></img>
+            {currentElement.type === "image" && 
+              <img src={currentElement.value} alt="current element"></img>
             }
             {currentElement.type === "text" && 
               <div>
                 <p className='text'>{currentElement.value}</p>
-                <iframe width="1920" height="1080" src="https://www.youtube.com/embed/5Peo-ivmupE?si=iY3jtIYj3Oh3ruxa&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                
+              </div>
+            }
+            {currentElement.type === "video" && 
+              <div>
+                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
               </div>
             }
             </div>

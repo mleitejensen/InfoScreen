@@ -130,3 +130,21 @@ header a {
   background-color: #dad6d6;
   border-radius: 15px;
 }
+
+.musicForm{
+  margin-top: 20px;
+}
+.musicForm input{
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.orderNumberInput{
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: 5px;
+  width: 30px;
+  position: relative;
+  bottom: 40px;
+}
