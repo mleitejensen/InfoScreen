@@ -41,19 +41,19 @@ function App() {
     }
   }
 
-  const test = async () => {
-    try {
-      let YOUR_API_KEY = ""
-      const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${currentElement.value.split("?v=")[1]}&part=contentDetails&key=${YOUR_API_KEY}`,);
-      let data = await response.json();
-      console.log(data)
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  // const test = async () => {
+  //   try {
+  //     let YOUR_API_KEY = ""
+  //     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${currentElement.value.split("?v=")[1]}&part=contentDetails&key=${YOUR_API_KEY}`,);
+  //     let data = await response.json();
+  //     console.log(data)
+  //   }
+  //   catch (error) {
+  //     console.log(error)
+  //   }
+  // }
  
-  test()
+  // test()
 
   
   return (
