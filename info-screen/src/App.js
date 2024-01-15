@@ -1,27 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import YouTube from "react-youtube"
 
 function App() {
   const [elements, setElements] = useState(null)
   const [currentElement, setCurrentElement] = useState(null)
   const [index, setIndex] = useState(-1)
+  const [videoLength, setVideoLength] = useState(null)
+  const maxElements = 10
 
-  useEffect(() => {
-    makeAPICall()
-    changeCurrentElement(index)
-    //Implementing the setInterval method
-    const timer = setInterval(() => {
-      if(index < ((elements?.length === undefined)? 10 : elements.length)){
-        setIndex(index + 1);
-      } else{
-        setIndex(0);
-      }
-       
-    }, 6000);
+  
 
-    return () => clearInterval(timer);
-  }, [index]);
-
+  
   const makeAPICall = async () => {
     try {
       const response = await fetch('http://localhost:9000/order',);
@@ -32,28 +22,50 @@ function App() {
       console.log(error)
     }
   }
-  
-  const changeCurrentElement = async (i) => {
-    try{
-      setCurrentElement(elements[i])
-    }catch(error){
-      console.log(error)
-    }
+
+ 
+ useEffect(() => {
+     makeAPICall()
+     changeCurrentElement(index)
+     //Implementing the setInterval method
+     const timer = setInterval(() => {
+       if(index < ((elements?.length === undefined)? maxElements : elements.length)){
+         setIndex(index + 1);
+       } else{
+         setIndex(0);
+       }
+       
+     }, currentElement?.type === "video" ? videoLength + "000" : 3000);
+
+     return () => clearInterval(timer);
+   }, [index]);
+
+   const changeCurrentElement = async (i) => {
+     try{
+       setCurrentElement(elements[i])
+     }catch(error){
+       //console.log(error)
+     }
+   }
+
+  const playerReady = (e) => {
+  console.log(currentElement?.type === "video" ? videoLength + "000" : 3000)
+  const duration = e.target.getDuration();
+  setVideoLength(duration)
+  console.log("duration: " + duration)
   }
 
-  // const test = async () => {
-  //   try {
-  //     let YOUR_API_KEY = ""
-  //     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${currentElement.value.split("?v=")[1]}&part=contentDetails&key=${YOUR_API_KEY}`,);
-  //     let data = await response.json();
-  //     console.log(data)
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //   }
-  // }
- 
-  // test()
+  
+
+  const opts = {
+    height: '1080',
+    width: '1920',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      mute: 1
+    }
+  };
 
   
   return (
@@ -72,7 +84,11 @@ function App() {
             }
             {currentElement.type === "video" && 
               <div>
-                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1&mute=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                <YouTube
+                  videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                  opts={opts}
+                  onReady={playerReady}
+                />
               </div>
             }
             </div>
