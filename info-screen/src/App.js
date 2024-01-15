@@ -72,7 +72,7 @@ function App() {
             }
             {currentElement.type === "video" && 
               <div>
-                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1&mute=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
               </div>
             }
             </div>
