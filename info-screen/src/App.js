@@ -1,59 +1,82 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import YouTube from "react-youtube"
 
 function App() {
-  const [elements, setElements] = useState(null)
+  const [elements, setElements] = useState([])
   const [currentElement, setCurrentElement] = useState(null)
-  const [index, setIndex] = useState(-1)
-
-  useEffect(() => {
-    makeAPICall()
-    changeCurrentElement(index)
-    //Implementing the setInterval method
-    const timer = setInterval(() => {
-      if(index < ((elements?.length === undefined)? 10 : elements.length)){
-        setIndex(index + 1);
-      } else{
-        setIndex(0);
-      }
-       
-    }, 6000);
-
-    return () => clearInterval(timer);
-  }, [index]);
-
+  const [index, setIndex] = useState(0)
+  const [videoLength, setVideoLength] = useState(null)
+  const maxElements = 10
+  
   const makeAPICall = async () => {
     try {
       const response = await fetch('http://localhost:9000/order',);
       let data = await response.json();
       setElements(data)
+      console.log(data)
     }
     catch (error) {
       console.log(error)
     }
   }
+    
+  useEffect(() => {
+    makeAPICall()
+  }, [])
   
   const changeCurrentElement = async (i) => {
     try{
       setCurrentElement(elements[i])
     }catch(error){
-      console.log(error)
+      //console.log(error)
     }
   }
 
-  // const test = async () => {
-  //   try {
-  //     let YOUR_API_KEY = ""
-  //     const response = await fetch(`https://www.googleapis.com/youtube/v3/videos?id=${currentElement.value.split("?v=")[1]}&part=contentDetails&key=${YOUR_API_KEY}`,);
-  //     let data = await response.json();
-  //     console.log(data)
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //   }
-  // }
- 
-  // test()
+  useEffect(() => {
+    changeCurrentElement(index)
+  }, [elements]);
+
+
+  useEffect(() => {
+    if(currentElement?.type !== "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
+      setTimeout(function(){
+        setIndex(index => index+1)
+      }, 3000)
+    } else if(currentElement?.type === "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
+      console.log(videoLength)
+      console.log(videoLength === undefined ? 10000 : videoLength)
+      setTimeout(function(){
+        setIndex(index => index+1)
+      }, 10000)
+    } else{
+      setIndex(0);
+    }
+  }, [currentElement])
+
+  useEffect(() => {
+    console.log(index)
+    changeCurrentElement(index)
+  }, [index])
+
+  const playerReady = (e) => {
+  //console.log(currentElement?.type === "video" ? videoLength * 1000 : 3000)
+  const duration = e.target.getDuration();
+  setVideoLength(duration * 1000)
+  //console.log("duration: " + duration)
+  }
+
+  
+
+  const opts = {
+    height: '1080',
+    width: '1920',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+      mute: 1
+    }
+  };
 
   
   return (
@@ -72,7 +95,11 @@ function App() {
             }
             {currentElement.type === "video" && 
               <div>
-                <iframe width="1980" height="1080" src={"https://www.youtube.com/embed/" + currentElement.value.split("?v=")[1] + "?&autoplay=1"} frameborder="0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                <YouTube
+                  videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                  opts={opts}
+                  onReady={playerReady}
+                />
               </div>
             }
             </div>
