@@ -3,56 +3,67 @@ import './App.css';
 import YouTube from "react-youtube"
 
 function App() {
-  const [elements, setElements] = useState(null)
+  const [elements, setElements] = useState([])
   const [currentElement, setCurrentElement] = useState(null)
-  const [index, setIndex] = useState(-1)
+  const [index, setIndex] = useState(0)
   const [videoLength, setVideoLength] = useState(null)
   const maxElements = 10
-
-  
-
   
   const makeAPICall = async () => {
     try {
       const response = await fetch('http://localhost:9000/order',);
       let data = await response.json();
       setElements(data)
+      console.log(data)
     }
     catch (error) {
       console.log(error)
     }
   }
+    
+  useEffect(() => {
+    makeAPICall()
+  }, [])
+  
+  const changeCurrentElement = async (i) => {
+    try{
+      setCurrentElement(elements[i])
+    }catch(error){
+      //console.log(error)
+    }
+  }
 
- 
- useEffect(() => {
-     makeAPICall()
-     changeCurrentElement(index)
-     //Implementing the setInterval method
-     const timer = setInterval(() => {
-       if(index < ((elements?.length === undefined)? maxElements : elements.length)){
-         setIndex(index + 1);
-       } else{
-         setIndex(0);
-       }
-       
-     }, currentElement?.type === "video" ? videoLength + "000" : 3000);
+  useEffect(() => {
+    changeCurrentElement(index)
+  }, [elements]);
 
-     return () => clearInterval(timer);
-   }, [index]);
 
-   const changeCurrentElement = async (i) => {
-     try{
-       setCurrentElement(elements[i])
-     }catch(error){
-       //console.log(error)
-     }
-   }
+  useEffect(() => {
+    if(currentElement?.type !== "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
+      setTimeout(function(){
+        setIndex(index => index+1)
+      }, 3000)
+    } else if(currentElement?.type === "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
+      console.log(videoLength)
+      console.log(videoLength === undefined ? 10000 : videoLength)
+      setTimeout(function(){
+        setIndex(index => index+1)
+      }, 10000)
+    } else{
+      setIndex(0);
+    }
+  }, [currentElement])
+
+  useEffect(() => {
+    console.log(index)
+    changeCurrentElement(index)
+  }, [index])
 
   const playerReady = (e) => {
-  console.log(currentElement?.type === "video" ? videoLength + "000" : 3000)
+  //console.log(currentElement?.type === "video" ? videoLength * 1000 : 3000)
   const duration = e.target.getDuration();
-  setVideoLength(duration)
-  console.log("duration: " + duration)
+  setVideoLength(duration * 1000)
+  //console.log("duration: " + duration)
   }
 
   
