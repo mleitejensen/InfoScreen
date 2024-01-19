@@ -1,11 +1,12 @@
 import { useState, useEffect} from "react"
-//import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import YouTube from "react-youtube"
 
 const Order = () => {
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
-  const [musicContent, setMusicContent] = useState('')
   const [type, setType] = useState('text')
+  const [duration, setDuration] = useState(null)
+  const [checkDuration, setCheckDuration] = useState(false)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -19,24 +20,38 @@ const Order = () => {
       const response = await fetch('http://localhost:9000/order',);
       let data = await response.json();
       setElements(data)
-      console.log(data)
     }
     catch (error) {
       console.log(error)
     }
   }
 
-
-  const createElement = async (e) => {
+  const getLength = (e) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
     setResult(null)
 
+    if(type === "video"){
+      setCheckDuration(true)
+      //setDuration(10000)
+    } else{
+      setDuration(3000)
+    }
+  }
+
+  useEffect(() => {
+    if(duration){
+      console.log(duration)
+      createElement()
+    }
+  }, [duration])
+
+  const createElement = async () => {
     const response = await fetch('http://localhost:9000/order/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', },
-      body: JSON.stringify({ type, value: elementContent })
+      body: JSON.stringify({ type, value: elementContent, duration })
     })
     const json = await response.json()
 
@@ -48,29 +63,8 @@ const Order = () => {
       setIsLoading(false)
       setResult(json.result)
     }
+    setDuration(null)
     makeAPICall()
-  }
-
-  const uploadMusic = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
-    setResult(null)
-    const response = await fetch('http://localhost:9000/order/music/update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', },
-      body: JSON.stringify({ type, value: musicContent })
-    })
-    const json = await response.json()
-
-    if (!response.ok) {
-      setIsLoading(false)
-      setError(json.error)
-    }
-    if (response.ok) {
-      setIsLoading(false)
-      setResult(json.result)
-    }
   }
 
   const deleteElement = async (id) => {
@@ -85,12 +79,24 @@ const Order = () => {
     }catch(error){
       console.log(error)
     }
-    
+
   }
+
+  const playerReady = ((e) => {
+    console.log("player is ready")
+    console.log(e.target.getDuration() * 1000)
+    setDuration(e.target.getDuration() * 1000)
+    setCheckDuration(false)
+  })
+
+  const opts = {
+    height: '0',
+    width: "0"
+  };
 
   return (
     <div className="order">
-      <form onSubmit={createElement}>
+      <form onSubmit={getLength}>
         <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
@@ -111,14 +117,6 @@ const Order = () => {
 
         <button disabled={isLoading}>Upload</button>
       </form>
-
-      <form className="musicForm" onSubmit={uploadMusic}>
-        <label>Upload a youtube url here to use as background music</label><br/>
-        <input type="text" placeholder="youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
-
-        <button disabled={isLoading}>Upload</button>
-        
-      </form>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
       <br /><br />
@@ -132,6 +130,7 @@ const Order = () => {
             <p>Type: Text</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>{element.value}</p>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             </div>
@@ -141,6 +140,7 @@ const Order = () => {
             <p>Type: Image</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
             <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
           </div>
@@ -149,7 +149,8 @@ const Order = () => {
           <div className="orderElement">
             <p>Type: Video</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
-            <iframe width="280" height="157,5" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1].split("&")[0]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             
@@ -157,6 +158,14 @@ const Order = () => {
           }
         </div>
       ))}
+
+      {checkDuration && 
+        <YouTube
+        videoId={elementContent.split("?v=")[1].split("&")[0]}
+        opts={opts}
+        onReady={playerReady}
+      />
+      }
 
       {!elements && 
         <div>Loading image...</div>

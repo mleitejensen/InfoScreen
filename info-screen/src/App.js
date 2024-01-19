@@ -6,7 +6,6 @@ function App() {
   const [elements, setElements] = useState([])
   const [currentElement, setCurrentElement] = useState(null)
   const [index, setIndex] = useState(0)
-  const [videoLength, setVideoLength] = useState(null)
   const maxElements = 10
   
   const makeAPICall = async () => {
@@ -42,13 +41,11 @@ function App() {
     if(currentElement?.type !== "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
       setTimeout(function(){
         setIndex(index => index+1)
-      }, 3000)
+      }, currentElement.duration)
     } else if(currentElement?.type === "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
-      console.log(videoLength)
-      console.log(videoLength === undefined ? 10000 : videoLength)
       setTimeout(function(){
         setIndex(index => index+1)
-      }, 10000)
+      }, currentElement.duration)
     } else{
       setIndex(0);
     }
@@ -58,15 +55,6 @@ function App() {
     console.log(index)
     changeCurrentElement(index)
   }, [index])
-
-  const playerReady = (e) => {
-  //console.log(currentElement?.type === "video" ? videoLength * 1000 : 3000)
-  const duration = e.target.getDuration();
-  setVideoLength(duration * 1000)
-  //console.log("duration: " + duration)
-  }
-
-  
 
   const opts = {
     height: '1080',
@@ -98,7 +86,6 @@ function App() {
                 <YouTube
                   videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                   opts={opts}
-                  onReady={playerReady}
                 />
               </div>
             }
