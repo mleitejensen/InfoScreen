@@ -65,28 +65,6 @@ const Order = () => {
     makeAPICall()
   }
 
-  const uploadMusic = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError(null)
-    setResult(null)
-    const response = await fetch('http://localhost:9000/order/music/update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', },
-      body: JSON.stringify({ type, value: musicContent })
-    })
-    const json = await response.json()
-
-    if (!response.ok) {
-      setIsLoading(false)
-      setError(json.error)
-    }
-    if (response.ok) {
-      setIsLoading(false)
-      setResult(json.result)
-    }
-  }
-
   const deleteElement = async (id) => {
     console.log(id)
     try{ 
@@ -124,14 +102,6 @@ const Order = () => {
         }        
 
         <button disabled={isLoading}>Upload</button>
-      </form>
-
-      <form className="musicForm" onSubmit={uploadMusic}>
-        <label>Upload a youtube url here to use as background music</label><br/>
-        <input type="text" placeholder="youtube.com/..." onChange={(e) => setMusicContent(e.target.value)}/>
-
-        <button disabled={isLoading}>Upload</button>
-        
       </form>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}

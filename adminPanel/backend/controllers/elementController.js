@@ -42,27 +42,6 @@ const deleteElement = async (req, res) => { // deleting element with _id
   }
 }
 
-const initializeMusic = async (req, res) => { // use this if you delete the music document or when first setting up
-  const {value} = req.body
-  try{
-    const music = await musicModel.create({value})
-    res.status(201).json({music})
-  }catch(error){
-    res.status(400).json({error: error.message})
-  }
-}
-
-const uploadMusic = async (req, res) => { // updates the music document
-  const {value} = req.body
-  try{
-    const filter = await musicModel.find({})
-    const updatedMusic = await musicModel.findOneAndUpdate({filter, value})
-    res.status(201).json({updatedMusic})
-  }catch(error){
-    res.status(400).json({error: error.message})
-  } 
-}
-
 module.exports = {
   createElement,
   getElements,
