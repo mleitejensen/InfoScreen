@@ -35,11 +35,43 @@ const loginUser = async (req, res) => {
   }
 }
 
+const deleteUser = async (req, res) => { // deleting element with _id
+  const {id} = req.body
+  try{ 
+    const del = await User.deleteOne({_id: id}) 
+    res.status(200).send(del)
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
+const updateUser = async (req, res) => {
+  const {id} = req.body
+  const find = await User.findById(id)
+  if(find.admin === "no"){
+    try{
+      const update = await User.findOneAndUpdate({_id: id}, {admin: "yes"})
+      res.status(200).send(update)
+    }catch(error){
+      res.status(400).json({error: error.message})
+    }
+  }else{
+    try{
+      const update = await User.findOneAndUpdate({_id: id}, {admin: "no"})
+      res.status(200).send(update)
+    }catch(error){
+      res.status(400).json({error: error.message})
+    }
+  }
+}
+
 
 
 module.exports = {
   getUsers,
   createUser,
   loginUser,
+  deleteUser,
+  updateUser,
 }
 
