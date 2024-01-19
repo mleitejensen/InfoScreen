@@ -2,11 +2,11 @@ const InfoScreen = require("../models/infoScreenModel")
 const musicModel = require("../models/musicModel")
 
 const createElement = async (req, res) => { // create an element
-  const {type, value} = req.body
+  const {type, value, duration} = req.body
   const elements = await InfoScreen.find({})
   try{
     if(elements.length < 10){ // can only create elements when you have less than 10 elements
-      const element = await InfoScreen.create({type, value, order: (elements.length + 1)})
+      const element = await InfoScreen.create({type, value, duration, order: (elements.length + 1)})
       res.status(201).json(element)
     } else{
       throw Error("You can not have more than 10 elements at a time")

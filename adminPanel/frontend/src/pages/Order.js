@@ -1,11 +1,11 @@
 import { useState, useEffect} from "react"
-//import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
 const Order = () => {
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
   const [musicContent, setMusicContent] = useState('')
   const [type, setType] = useState('text')
+  const [duration, setDuration] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -19,24 +19,37 @@ const Order = () => {
       const response = await fetch('http://localhost:9000/order',);
       let data = await response.json();
       setElements(data)
-      console.log(data)
     }
     catch (error) {
       console.log(error)
     }
   }
 
-
-  const createElement = async (e) => {
+  const getDuration = (e) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
     setResult(null)
 
+    if(type === "video"){
+      setDuration(10000)
+    } else{
+      setDuration(3000)
+    }
+  }
+
+  useEffect(() => {
+    if(duration){
+      console.log(duration)
+      createElement()
+    }
+  }, [duration])
+
+  const createElement = async () => {
     const response = await fetch('http://localhost:9000/order/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', },
-      body: JSON.stringify({ type, value: elementContent })
+      body: JSON.stringify({ type, value: elementContent, duration })
     })
     const json = await response.json()
 
@@ -48,6 +61,7 @@ const Order = () => {
       setIsLoading(false)
       setResult(json.result)
     }
+    setDuration(null)
     makeAPICall()
   }
 
@@ -90,7 +104,7 @@ const Order = () => {
 
   return (
     <div className="order">
-      <form onSubmit={createElement}>
+      <form onSubmit={getDuration}>
         <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>

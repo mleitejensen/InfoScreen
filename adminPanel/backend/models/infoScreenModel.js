@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const infoSchema = new mongoose.Schema({
     type: {type: String},
     value: {type: String},
+    duration: {type: Number},
     order: {type: Number,}
 }, {unique: true});
 
