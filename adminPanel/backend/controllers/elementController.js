@@ -1,5 +1,4 @@
 const InfoScreen = require("../models/infoScreenModel")
-const musicModel = require("../models/musicModel")
 
 const createElement = async (req, res) => { // create an element
   const {type, value, duration} = req.body
@@ -46,6 +45,4 @@ module.exports = {
   createElement,
   getElements,
   deleteElement,
-  initializeMusic,
-  uploadMusic,
 }

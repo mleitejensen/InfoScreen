@@ -1,11 +1,12 @@
 import { useState, useEffect} from "react"
+import YouTube from "react-youtube"
 
 const Order = () => {
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
-  const [musicContent, setMusicContent] = useState('')
   const [type, setType] = useState('text')
   const [duration, setDuration] = useState(null)
+  const [checkDuration, setCheckDuration] = useState(false)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -25,14 +26,15 @@ const Order = () => {
     }
   }
 
-  const getDuration = (e) => {
+  const getLength = (e) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
     setResult(null)
 
     if(type === "video"){
-      setDuration(10000)
+      setCheckDuration(true)
+      //setDuration(10000)
     } else{
       setDuration(3000)
     }
@@ -77,12 +79,24 @@ const Order = () => {
     }catch(error){
       console.log(error)
     }
-    
+
   }
+
+  const playerReady = ((e) => {
+    console.log("player is ready")
+    console.log(e.target.getDuration() * 1000)
+    setDuration(e.target.getDuration() * 1000)
+    setCheckDuration(false)
+  })
+
+  const opts = {
+    height: '0',
+    width: "0"
+  };
 
   return (
     <div className="order">
-      <form onSubmit={getDuration}>
+      <form onSubmit={getLength}>
         <div className="formTitle">Upload something to show on the info panel</div>
         <label>Choose a type:</label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
@@ -116,6 +130,7 @@ const Order = () => {
             <p>Type: Text</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>{element.value}</p>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             </div>
@@ -125,6 +140,7 @@ const Order = () => {
             <p>Type: Image</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
             <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
           </div>
@@ -133,7 +149,8 @@ const Order = () => {
           <div className="orderElement">
             <p>Type: Video</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
-            <iframe width="280" height="157,5" src={"https://www.youtube.com/embed/" + element.value.split("?v=")[1].split("&")[0]} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
+            <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
             
@@ -141,6 +158,14 @@ const Order = () => {
           }
         </div>
       ))}
+
+      {checkDuration && 
+        <YouTube
+        videoId={elementContent.split("?v=")[1].split("&")[0]}
+        opts={opts}
+        onReady={playerReady}
+      />
+      }
 
       {!elements && 
         <div>Loading image...</div>
