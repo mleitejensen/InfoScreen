@@ -71,9 +71,9 @@ const Order = () => {
     console.log(id)
     try{ 
         await fetch('http://localhost:9000/order/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        body: JSON.stringify({id: id })
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', },
+          body: JSON.stringify({id: id })
       })
       makeAPICall()
     }catch(error){

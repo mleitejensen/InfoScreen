@@ -18,6 +18,34 @@ const Users = () => {
         }
     }
 
+    const deleteUser = async (id) => {
+        try{
+            const response = await fetch('http://localhost:9000/users/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({id})
+            })
+            console.log(response)
+            makeAPICall()
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const updateUser = async (id) => {
+        try{
+            const response = await fetch('http://localhost:9000/users/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({id})
+            })
+            console.log(response)
+            makeAPICall()
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     return(
         <div className="users">
             <div className="listTitle">
@@ -28,6 +56,14 @@ const Users = () => {
                     <div className="userPreview" key={user._id}>
                         <h2>{user.username}</h2>
                         <h2>{user.admin}</h2>
+                        <button className="userDelete" onClick={() => {
+                            deleteUser(user._id)
+                        }}
+                        >Delete</button>
+                        <button className="userDelete" onClick={() => {
+                            updateUser(user._id)
+                        }}
+                        >Update User</button>
                     </div>
                ))}
                {!users && "Loading..."}
