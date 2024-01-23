@@ -95,7 +95,7 @@ header a {
 .userPreview{
   justify-content: center;
   display: grid;
-  grid-template-columns: 200px 200px 200px 200px;
+  grid-template-columns: 200px 200px 80px 80px;
 }
 
 .userPreview h2{
@@ -108,7 +108,7 @@ header a {
 .listTitle{
   justify-content: center;
   display: grid;
-  grid-template-columns: 200px 200px 200px 200px;
+  grid-template-columns: 200px 200px 80px 80px;
 }
 
 .listTitle h2{

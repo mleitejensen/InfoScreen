@@ -63,7 +63,7 @@ const Users = () => {
                         {user.admin === "no" && 
                             <button className="userDelete" onClick={() => {
                                 updateUser(user._id)
-                            }}>Make User Admin</button>
+                            }}>Make Admin</button>
                         }
                         {user.admin === "yes" && 
                             <button className="userDelete" onClick={() => {
