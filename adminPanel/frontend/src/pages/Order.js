@@ -1,5 +1,6 @@
 import { useState, useEffect} from "react"
 import YouTube from "react-youtube"
+import { AuthContext } from "../context/AuthContext"
 
 const Order = () => {
   const [elements, setElements] = useState()
@@ -10,6 +11,8 @@ const Order = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
+  
+  const {user} = AuthContext
 
   useEffect(() => {
     makeAPICall()
@@ -17,7 +20,11 @@ const Order = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:9000/order',);
+      const response = await fetch('http://localhost:9000/order', {
+        headers: {
+          "Autorization": ""
+        }
+      });
       let data = await response.json();
       setElements(data)
     }
