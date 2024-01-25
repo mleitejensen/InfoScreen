@@ -1,7 +1,5 @@
-const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 const User = require("../models/userModel")
-const InfoScreen = require("../models/infoScreenModel")
 
 const createWebToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '1d' })
@@ -28,6 +26,9 @@ const loginUser = async (req, res) => {
 
   try{
     const user = await User.login(username, password)
+    if(user.admin === false){
+      throw Error("You are not an admin")
+    }
     const token = createWebToken(user._id)
     res.status(200).json({username, token})
   }catch(error){
