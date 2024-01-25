@@ -17,11 +17,9 @@ const Navbar = () => {
           <h1>Users</h1>
         </Link>
         <Link to="/order">
-          <h1>Order</h1>
+          <h1>Info Screen Order</h1>
         </Link>
-        <Link to="/">
-          <h1>Loigin / Signup</h1>
-        </Link>
+       
         <nav>
         {user && (
             <div>

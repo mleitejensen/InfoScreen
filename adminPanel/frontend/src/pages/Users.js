@@ -9,7 +9,7 @@ const Users = () => {
       
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/users',);
+            const response = await fetch('http://localhost:9000/users');
             let data = await response.json();
             setUsers(data)
         }
@@ -22,7 +22,9 @@ const Users = () => {
         try{
             const response = await fetch('http://localhost:9000/users/delete', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({id})
             })
             console.log(response)
