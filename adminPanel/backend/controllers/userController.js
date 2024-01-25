@@ -48,16 +48,16 @@ const deleteUser = async (req, res) => { // deleting element with _id
 const updateUser = async (req, res) => {
   const {id} = req.body
   const find = await User.findById(id)
-  if(find.admin === "no"){
+  if(find.admin === false){
     try{
-      const update = await User.findOneAndUpdate({_id: id}, {admin: "yes"})
+      const update = await User.findOneAndUpdate({_id: id}, {admin: true})
       res.status(200).send(update)
     }catch(error){
       res.status(400).json({error: error.message})
     }
   }else{
     try{
-      const update = await User.findOneAndUpdate({_id: id}, {admin: "no"})
+      const update = await User.findOneAndUpdate({_id: id}, {admin: false})
       res.status(200).send(update)
     }catch(error){
       res.status(400).json({error: error.message})
