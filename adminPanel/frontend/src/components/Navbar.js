@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <header>
-      <div className="container">
+        <nav>
         <Link to="/users">
           <h1>Users</h1>
         </Link>
@@ -20,9 +20,8 @@ const Navbar = () => {
           <h1>Info Screen Order</h1>
         </Link>
        
-        <nav>
         {user && (
-            <div>
+            <div className='username'>
               <span>{user.username}  </span>
               <Link to="/"><button onClick={handleClick}>Log out</button></Link>
             </div>
@@ -33,8 +32,6 @@ const Navbar = () => {
             </div>
           )}
         </nav>
-        
-      </div>
     </header>
   )
 }

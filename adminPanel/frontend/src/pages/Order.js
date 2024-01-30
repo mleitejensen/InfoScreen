@@ -28,6 +28,7 @@ const Order = () => {
 
   const getLength = (e) => {
     e.preventDefault()
+    e.target.reset()
     setIsLoading(true)
     setError(null)
     setResult(null)
@@ -96,15 +97,15 @@ const Order = () => {
 
   return (
     <div className="order">
-      <form onSubmit={getLength}>
+      <form className="upload" onSubmit={getLength}>
         <div className="formTitle">Upload something to show on the info panel</div>
-        <label>Choose a type:</label>
+        <label>Choose a type: </label>
         <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
           <option value="text">Text</option>
           <option value="image">Image</option>
           <option value="video">Video</option>
-        </select><br />
-        <label>Write content</label><br />
+        </select><br/><br/>
+        <label>Insert content: </label>
         {type === "text" && 
           <input type="text" placeholder="write anything..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
         }
@@ -114,7 +115,7 @@ const Order = () => {
         {type === "video" && 
           <input type="text" placeholder="youtube.com/..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
         }        
-
+        <br/><br/>
         <button disabled={isLoading}>Upload</button>
       </form>
       {error && <div className="error">{error}</div>}
@@ -129,7 +130,7 @@ const Order = () => {
           <div className="orderElement">
             <p>Type: Text</p>
             <input className="orderNumberInput" value={element.order} type="number"></input>
-            <p>{element.value}</p>
+            <p className="elementText">{element.value}</p>
             <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
             <button onClick={() => {deleteElement(element._id)}}>Delete</button>
