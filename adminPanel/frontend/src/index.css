@@ -3,18 +3,30 @@
 
 /* layout */
 :root {
-  --primary: #1aac83;
+  --primary: #282c34;
+  --secondary: #1e2229;
+  --tertiary: #121416;
+  --text: white;
+  --success: #1aac83;
   --error: #e7195a;
+  --change: #98a336;
 }
+
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 body {
-  background: #f1f1f1;
+  background: var(--primary);
+  color: white;
   margin: 0;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 header {
-  background: #fff;
+  background: var(--secondary);
+  color: var(--text);
 }
-header .container {
+nav {
   max-width: 1400px;
   margin: 0 auto;
   padding: 10px 20px;
@@ -22,10 +34,32 @@ header .container {
   align-items: center;
   justify-content: space-between;
 }
+
+nav .username{
+  font-size: 20px;
+}
+
+nav div a{
+  font-size: 20px;
+}
+
 header a {
-  color: #333;
+  color: var(--text);
   text-decoration: none;
 }
+
+* button{
+  border-radius: 5px;
+  border: 0.2px solid black;
+  background-color: var(--tertiary);
+  color: var(--text);
+  font-size: 15px;
+}
+
+* button:hover{
+  cursor: pointer;
+}
+
 .pages{
   max-width: 1400px;
   padding: 20px;
@@ -33,8 +67,9 @@ header a {
 }
 
 /* homepage */
-.home {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.home h2{
+  text-align: center;
+  font-size: 50px
 }
 
 .login{
@@ -49,9 +84,9 @@ header a {
   margin-top: 20px;
 }
 
-.login, .login input, .login button{
-  font-size: 20px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.login label, .login input, .login button, .signup label, .signup input, .signup button{
+  font-size: 25px;
+  margin: 5px 0px 5px 0px
 }
 
 .signup{
@@ -61,61 +96,91 @@ header a {
   right: 25%;
 }
 
-.signup button{
-  margin-top: 20px;
-}
-
-.signup, .signup input, .signup button{
-  font-size: 20px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
 .formTitle{
   font-size: 50px;
   padding: 20px;
+  text-align: center;
+  margin: 0px 0px 30px 0px;
+}
+
+.upload label, .upload select{
+  font-size: 20px;
+  border-radius: 4px;
+}
+.upload input{
+  font-size: 20px;
+  border-radius: 4px;
+  width: 500px;
+  margin: 0px 20px 0px 0px;
+}
+.upload button{
+  font-size: 20px;
+  background-color: rgb(26, 131, 99);
+}
+.upload button:disabled{
+  background-color: var(--tertiary);
 }
 
 .result{
   top: 40px;
-  background-color: #1aac83;
+  background-color: var(--success);
   margin-top: 10px;
   border-radius: 8px;
   text-align: center;
-  color: #f1f1f1;
+  color: var(--text);
+  font-size: 20px;
 }
 
 .error{
-  background-color: #e7195a;
-  margin-top: 10px;
+  background-color: var(--error);
+  margin: 10px 0px 10px 0px;
   border-radius: 8px;
   text-align: center;
-  color: #f1f1f1;
+  color: var(--text);
+  font-size: 20px;
 }
 
 .userPreview{
   justify-content: center;
   display: grid;
   grid-template-columns: 200px 200px 80px 80px;
+  font-size: 20px;
+  color: var(--text);
 }
 
 .userPreview h2{
   margin: 0;
   padding: 5px;
   text-align: center;
-  border: 1px solid;
+  border: 1px solid black;
+  background-color: var(--secondary);
+}
+
+.userToAdmin{
+  background-color: var(--success);
+}
+
+.userToLoser{
+  background-color: var(--change);
+}
+
+.userDelete{
+  background-color: var(--error);
 }
 
 .listTitle{
   justify-content: center;
   display: grid;
   grid-template-columns: 200px 200px 80px 80px;
+  font-size: 20px;
+  color: var(--text);
 }
 
 .listTitle h2{
-  color: #f1f1f1;
-  background-color: black;
+  background-color: var(--tertiary);
   text-align: center;
-  border: 1px solid;
+  border: 1px solid black;
+  margin: 0px;
 }
 
 .elementPreview{
@@ -123,19 +188,21 @@ header a {
 }
 
 .orderElement{
-  padding: 2px;
+  padding: 10px;
   padding-left: 40px;
-  margin: 2px;
-  background-color: #dad6d6;
+  margin: 5px;
+  background-color: var(--secondary);
   border-radius: 15px;
+  font-size: 20px;
 }
 
-.musicForm{
-  margin-top: 20px;
+.orderElement button{
+  font-size: 20px;
+  background-color: var(--error);
 }
-.musicForm input{
-  margin-top: 5px;
-  margin-right: 5px;
+
+.elementText{
+  margin: 0px;
 }
 
 .orderNumberInput{
@@ -146,4 +213,5 @@ header a {
   width: 30px;
   position: relative;
   bottom: 40px;
+  font-size: 15px;
 }
