@@ -128,38 +128,41 @@ const Order = () => {
         <div className="elementPreview" key={element._id}>
           {element.type === "text" && 
           <div className="orderElement">
+            <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>Type: Text</p>
             {element.topText && <p>Top text: {element.topText}</p>}
-            <input className="orderNumberInput" value={element.order} type="number"></input>
             <p className="elementText">{element.value}</p>
             {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
             <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="edit" onClick={() => {console.log(element)}}>Edit</button>
             </div>
           }
           {element.type === "image" && 
           <div className="orderElement">
+            <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>Type: Image</p>
             {element.topText && <p>Top text: {element.topText}</p>}
-            <input className="orderNumberInput" value={element.order} type="number"></input>
             <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
             {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
             <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="edit" onClick={() => {console.log(element._id)}}>Edit</button>
           </div>
           }
           {element.type === "video" && 
           <div className="orderElement">
+            <input className="orderNumberInput" value={element.order} type="number"></input>
             <p>Type: Video</p>
             {element.topText && <p>Top text: {element.topText}</p>}
-            <input className="orderNumberInput" value={element.order} type="number"></input>
             <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
             {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
             <p>Duration: {element.duration / 1000} seconds</p>
             <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+            <button className="edit" onClick={() => {console.log(element._id)}}>Edit</button>
             
             </div>
           }

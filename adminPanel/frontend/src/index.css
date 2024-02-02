@@ -193,6 +193,7 @@ header a {
 }
 
 .orderElement{
+  position: relative;
   padding: 10px;
   padding-left: 40px;
   margin: 5px;
@@ -201,9 +202,15 @@ header a {
   font-size: 20px;
 }
 
-.orderElement button{
+.orderElement .delete{
   font-size: 20px;
   background-color: var(--error);
+}
+
+.orderElement .edit{
+  font-size: 20px;
+  background-color: var(--change);
+  margin: 0px 20px;
 }
 
 .elementText{
@@ -216,7 +223,7 @@ header a {
   margin-left: auto;
   margin-right: 5px;
   width: 30px;
-  position: relative;
-  bottom: 40px;
+  position: absolute;
+  left: 1220px;
   font-size: 15px;
 }
