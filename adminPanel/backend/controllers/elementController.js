@@ -35,7 +35,18 @@ const deleteElement = async (req, res) => { // deleting element with _id
       await InfoScreen.findOneAndUpdate(element, {order: i})
       i++
     }
-    res.status(200).send(del)
+    res.status(200).json(del)
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
+const updateElement = async (req, res) => {
+  const {id, type, value, duration, order, topText, bottomText} = req.body
+  try{
+    const update = await InfoScreen.findOneAndUpdate({_id: id}, { type, value, duration, order, topText, bottomText })
+    console.log(update)
+    res.status(200).json(update)
   }catch(error){
     res.status(400).json({error: error.message})
   }
@@ -45,4 +56,5 @@ module.exports = {
   createElement,
   getElements,
   deleteElement,
+  updateElement,
 }
