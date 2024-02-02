@@ -12,26 +12,22 @@ const Navbar = () => {
 
   return (
     <header>
-        <nav>
-        <Link to="/users">
-          <h1>Users</h1>
-        </Link>
-        <Link to="/order">
-          <h1>Info Screen Order</h1>
-        </Link>
-       
         {user && (
-            <div className='username'>
-              <span>{user.username}  </span>
-              <Link to="/"><button onClick={handleClick}>Log out</button></Link>
-            </div>
-          )}
-          {!user && (
-            <div>
-              <Link to="/">Login or Signup</Link>
-            </div>
-          )}
-        </nav>
+          <nav>
+          <Link to="/users">
+            <h1>Users</h1>
+          </Link>
+          <Link to="/order">
+            <h1>Info Screen Order</h1>
+          </Link>
+        
+              <div className='username'>
+                <span>{user.username}  </span>
+                <Link to="/"><button onClick={handleClick}>Log out</button></Link>
+              </div>
+            
+          </nav>
+        )}
     </header>
   )
 }

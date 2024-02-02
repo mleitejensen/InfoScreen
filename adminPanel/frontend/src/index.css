@@ -72,6 +72,11 @@ header a {
   font-size: 50px
 }
 
+.home p{
+  text-align: center;
+  font-size: 30px
+}
+
 .login{
   margin-top: 50px;
   position: absolute;
