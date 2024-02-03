@@ -108,7 +108,7 @@ header a {
   margin: 0px 0px 30px 0px;
 }
 
-.upload label, .upload select{
+.upload label, select{
   font-size: 20px;
   border-radius: 4px;
 }
@@ -217,13 +217,29 @@ header a {
   margin: 0px 20px;
 }
 
+.orderElement .save{
+  font-size: 20px;
+  background-color: var(--success);
+}
+
+.orderElement .cancel{
+  font-size: 20px;
+  background-color: var(--error);
+  margin: 0px 20px;
+}
+
 .fieldName{
   display: inline;
   color: var(--change);
 }
 
-.elementText{
-  margin: 0px;
+.editInput{
+  width: 600px;
+}
+
+.toolTip{
+  display: inline;
+  margin: 0px 20px;
 }
 
 .orderNumberInput{
@@ -236,3 +252,4 @@ header a {
   left: 95%;
   font-size: 15px;
 }
+

@@ -6,6 +6,8 @@ const Order = () => {
   const [elementContent, setElementContent] = useState('')
   const [type, setType] = useState('text')
   const [duration, setDuration] = useState(null)
+  const [topText, setTopText] = useState(null)
+  const [bottomText, setBottomText] = useState(null)
   const [checkDuration, setCheckDuration] = useState(false)
   const [editing, setEditing] = useState(null)
   const [error, setError] = useState(null)
@@ -26,6 +28,10 @@ const Order = () => {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    console.log(elementContent)
+  }, [elementContent])
 
   const getLength = (e) => {
     e.preventDefault()
@@ -149,20 +155,59 @@ const Order = () => {
           {element.type === "text" && 
             <div className="orderElement">
               <input className="orderNumberInput" value={element.order} type="number"></input>
-              <p><p className="fieldName">Type: </p>Text</p>
-              {element.topText && 
-                <p><p className="fieldName">Top text: </p>{element.topText}</p>
-              }
               {editing === element._id 
-                ? <p className="elementText"><p className="fieldName">Body text: </p><input placeholder={element.value} onChange={(e) => updateElement(element)}></input></p>
-                : <p className="elementText"><p className="fieldName">Body text: </p>{element.value}</p>
+                ? // if true
+                  <div>
+                    <p>
+                      <p className="fieldName">Type: </p><select name="type" id="type" defaultValue={element.type}>
+                        <option value="text">Text</option>
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                      </select>
+                    </p>
+
+                    {element.topText && 
+                      <p><p className="fieldName">Top text: </p><input className="editInput" defaultValue={element.topText} onChange={(e) => updateElement(element)}></input><p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p> 
+                    }
+
+                    <p><p className="fieldName">Body text: </p><input className="editInput" defaultValue={element.value} onChange={(e) => setElementContent(e.target.value)}></input></p>
+
+                    {element.bottomText && 
+                      <p><p className="fieldName">Bottom text: </p><input className="editInput" defaultValue={element.bottomText} onChange={(e) => updateElement(element)}></input><p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
+                    }
+                    <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+                  </div>
+                : // if false
+                  <div>
+                    
+                    <p><p className="fieldName">Type: </p>Text</p>
+                    {element.topText && 
+                      <p><p className="fieldName">Top text: </p>{element.topText}</p>
+                    }
+                    
+                    <p><p className="fieldName">Body text: </p>{element.value}</p>
+                    {element.bottomText && 
+                      <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>
+                    }
+                    <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+                  </div>
               }
               
-              {element.bottomText && <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>}
-              <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+              
+              
               <p className="orderNumber">{element.order}/{elements.length}</p>
-              <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
-              <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>
+              
+              {editing === element._id 
+              ? <>
+                <button className="save" onClick={() => {console.log(element)}}>Save</button>
+                <button className="cancel" onClick={() => {setEditing(null)}}>Cancel</button>
+              </>
+              : <>
+                <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+                <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>
+              </>
+              }
+              
             </div>
           }
           {element.type === "image" && 
