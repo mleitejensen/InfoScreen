@@ -6,13 +6,17 @@ const Order = () => {
   const [elementContent, setElementContent] = useState('')
   const [type, setType] = useState('text')
   const [duration, setDuration] = useState(null)
-  const [topText, setTopText] = useState(null)
-  const [bottomText, setBottomText] = useState(null)
   const [checkDuration, setCheckDuration] = useState(false)
-  const [editing, setEditing] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
+  
+  const [editing, setEditing] = useState(null)
+  const [updateType, setUpdateType] = useState(null)
+  const [topText, setTopText] = useState(null)
+  const [updateContent, setUpdateContent] = useState(null)
+  const [bottomText, setBottomText] = useState(null)
+  const [updateDuration, setUpdateDuration] = useState(null)
 
   useEffect(() => {
       makeAPICall()
@@ -28,10 +32,6 @@ const Order = () => {
       console.log(error)
     }
   }
-
-  useEffect(() => {
-    console.log(elementContent)
-  }, [elementContent])
 
   const getLength = (e) => {
     e.preventDefault()
@@ -78,11 +78,23 @@ const Order = () => {
   const deleteElement = async (id) => {
     console.log(id)
     try{ 
-        await fetch('http://localhost:9000/order/delete', {
+        const response = await fetch('http://localhost:9000/order/delete', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify({id: id })
       })
+
+      const json = await response.json()
+
+      if (!response.ok) {
+        setIsLoading(false)
+        setError(json.error)
+      }
+      if (response.ok) {
+        setIsLoading(false)
+        setResult(json.result)
+      }
+
       makeAPICall()
     }catch(error){
       console.log(error)
@@ -90,7 +102,7 @@ const Order = () => {
   }
 
   const updateElement = async (update) => { 
-    const {_id, type, value, duration, order, topText, bottomText} = update
+    const {id, type, value, duration, order, topText, bottomText} = update
     console.log(update)
     /*
     try{
@@ -154,28 +166,35 @@ const Order = () => {
         <div className="elementPreview" key={element._id}>
           {element.type === "text" && 
             <div className="orderElement">
-              <input className="orderNumberInput" value={element.order} type="number"></input>
+              <input className="orderNumberInput" defaultValue={element.order} type="number"></input>
               {editing === element._id 
                 ? // if true
                   <div>
                     <p>
-                      <p className="fieldName">Type: </p><select name="type" id="type" defaultValue={element.type}>
+                      <p className="fieldName">Type: </p><select name="type" id="type" defaultValue={element.type} onChange={(e) => setUpdateType(e.target.value)}>
                         <option value="text">Text</option>
                         <option value="image">Image</option>
                         <option value="video">Video</option>
                       </select>
                     </p>
 
-                    {element.topText && 
-                      <p><p className="fieldName">Top text: </p><input className="editInput" defaultValue={element.topText} onChange={(e) => updateElement(element)}></input><p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p> 
-                    }
+                    
+                      <p><p className="fieldName">Top text: </p>
+                      <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+                      <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p> 
+                    
 
-                    <p><p className="fieldName">Body text: </p><input className="editInput" defaultValue={element.value} onChange={(e) => setElementContent(e.target.value)}></input></p>
+                    <p><p className="fieldName">Body text: </p>
+                      <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+                    </p>
 
-                    {element.bottomText && 
-                      <p><p className="fieldName">Bottom text: </p><input className="editInput" defaultValue={element.bottomText} onChange={(e) => updateElement(element)}></input><p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
-                    }
-                    <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+                      <p><p className="fieldName">Bottom text: </p>
+                      <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+                      <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
+                    
+                    <p><p className="fieldName">Duration: </p>
+                      <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value)}></input>
+                       seconds</p>
                   </div>
                 : // if false
                   <div>
@@ -199,12 +218,27 @@ const Order = () => {
               
               {editing === element._id 
               ? <>
-                <button className="save" onClick={() => {console.log(element)}}>Save</button>
-                <button className="cancel" onClick={() => {setEditing(null)}}>Cancel</button>
+                <button className="save" disabled={isLoading} onClick={() => {updateElement({id: editing, type: updateType, topText, value: updateContent, bottomText, duration: updateDuration })}}>Save</button>
+                <button className="cancel" disabled={isLoading} onClick={() => {
+                    setEditing(null)
+                    setUpdateType(element.type)
+                    setTopText(element.topText)
+                    setUpdateContent(element.value)
+                    setBottomText(element.bottomText)
+                    setUpdateDuration(element.duration)
+                  
+                  }}>Cancel</button>
               </>
               : <>
-                <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
-                <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>
+                <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
+                <button className="edit" disabled={isLoading} onClick={() => {
+                  setEditing(element._id)
+                  setUpdateType(element.type)
+                  setTopText(element.topText)
+                  setUpdateContent(element.value)
+                  setBottomText(element.bottomText)
+                  setUpdateDuration(element.duration)
+                }}>Edit</button>
               </>
               }
               
