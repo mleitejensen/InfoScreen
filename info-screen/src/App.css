@@ -7,7 +7,9 @@ body{
   color: white;
   font-size: 20px;
   text-align: center;
-  overflow: hidden;
+  
+  max-height: 1080px;
+  max-width: 1920px;
 }
 
 img{
@@ -22,14 +24,58 @@ img{
 
 iframe{
   display: block;
-  
   max-height: 1080px;
   max-width: 1920px;
 }
 
+
 .text{
-  text-align: center;
-  margin-top: 500px;
-  box-sizing: border-box;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
   border: #282c34;
+}
+
+.bottomAndTopText{
+  display: grid;
+  grid-template-rows: 200px 680px 200px;
+  font-size: 40px;
+}
+
+.bottomAndTopText iframe{
+  height: 680px;
+  width: 1208px;
+  margin: auto;
+}
+
+.bottomAndTopText p{
+  margin: auto 0px;
+}
+
+.topText{
+  display: grid;
+  grid-template-rows: 200px 880px;
+  font-size: 40px;
+}
+.topText p{
+  margin: auto 0px;
+}
+.topText iframe{
+  height: 880px;
+  width: 1564px;
+  margin: auto;
+}
+
+.bottomText{
+  display: grid;
+  grid-template-rows: 880px 200px;
+  font-size: 40px;
+}
+.bottomText p{
+  margin: auto 0px;
+}
+.bottomText iframe{
+  height: 880px;
+  width: 1564px;
+  margin: auto;
 }
