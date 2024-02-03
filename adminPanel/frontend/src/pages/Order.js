@@ -16,6 +16,7 @@ const Order = () => {
   const [updateContent, setUpdateContent] = useState(null)
   const [bottomText, setBottomText] = useState(null)
   const [updateDuration, setUpdateDuration] = useState(null)
+  const [updateYTDuration, setUpdateYTDuration] = useState(null)
 
   useEffect(() => {
       makeAPICall()
@@ -102,21 +103,26 @@ const Order = () => {
 
   const updateElement = async (update) => { 
     const {id, type, value, duration, order, topText, bottomText} = update
-    console.log(update)
-    try{
-        const response = await fetch("http://localhost:9000/order/update", {
-          method: "POST",
-          headers:  { 'Content-Type': 'application/json', },
-          body: JSON.stringify({id, type, value, duration, order, topText, bottomText})
-        })
-    }catch(error){
-      console.log(error)
-    }finally{
-      makeAPICall()
-      resetUpdateStates()
-      setEditing(null)
+    if(duration > 0){
+      try{
+          await fetch("http://localhost:9000/order/update", {
+            method: "POST",
+            headers:  { 'Content-Type': 'application/json', },
+            body: JSON.stringify({id, type, value, duration, order, topText, bottomText})
+          })
+      }catch(error){
+        console.log(error)
+      }finally{
+        makeAPICall()
+        resetUpdateStates()
+        setEditing(null)
+      }
+    }else{
+      setUpdateYTDuration(update)
     }
   }
+
+
 
   const startEditing = ((element) => {
     setEditing(element._id)
@@ -134,16 +140,16 @@ const Order = () => {
   })
 
   const playerReady = ((e) => {
-    console.log("player is ready")
-    console.log(e.target.getDuration() * 1000)
     setDuration(e.target.getDuration() * 1000)
     setCheckDuration(false)
   })
 
-  const opts = {
-    height: '0',
-    width: "0"
-  };
+  const updateDurationPlayer = async (e) => {
+    let ytLength = await e.target.getDuration() * 1000
+    const {id, type, value, order, topText, bottomText} = updateYTDuration
+    updateElement({id, type, value, order, duration: ytLength, topText, bottomText})
+    setUpdateYTDuration(false)
+  }
 
   return (
     <div className="order">
@@ -312,7 +318,7 @@ const Order = () => {
                 <p className="orderNumber">{element.order}/{elements.length}</p>
 
                 <button className="save" disabled={isLoading} onClick={() => {
-                    updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: 0 })
                 }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
                   setEditing(null)
@@ -328,7 +334,10 @@ const Order = () => {
                 <p><p className="fieldName">Top text: </p>{element.topText}</p>
               }
 
-              <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
+              <YouTube 
+                videoId={element.value.split("?v=")[1].split("&")[0]} 
+                opts={{height: "216px", width: "384px"}}
+              />
 
               {element.bottomText && 
                 <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>
@@ -347,8 +356,16 @@ const Order = () => {
       {checkDuration && 
         <YouTube
           videoId={elementContent.split("?v=")[1].split("&")[0]}
-          opts={opts}
+          opts={{height: "0", width: "0"}}
           onReady={playerReady}
+        />
+      }
+
+      {updateYTDuration && 
+        <YouTube
+          videoId={updateYTDuration.value.split("?v=")[1].split("&")[0]}
+          opts={{height: "0", width: "0"}}
+          onReady={updateDurationPlayer}
         />
       }
 
