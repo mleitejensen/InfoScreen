@@ -7,6 +7,7 @@ const Order = () => {
   const [type, setType] = useState('text')
   const [duration, setDuration] = useState(null)
   const [checkDuration, setCheckDuration] = useState(false)
+  const [editing, setEditing] = useState(null)
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
   const [result, setResult] = useState(null)
@@ -80,7 +81,22 @@ const Order = () => {
     }catch(error){
       console.log(error)
     }
+  }
 
+  const updateElement = async (update) => { 
+    const {_id, type, value, duration, order, topText, bottomText} = update
+    console.log(update)
+    /*
+    try{
+        const response = await fetch("http://localhost:9000/order/update", {
+          method: "POST",
+          headers:  { 'Content-Type': 'application/json', },
+          body: JSON.stringify({id, type, value, duration, order, topText, bottomText})
+        })
+    }catch(error){
+      console.log(error)
+    }
+    */
   }
 
   const playerReady = ((e) => {
@@ -94,6 +110,10 @@ const Order = () => {
     height: '0',
     width: "0"
   };
+
+  useEffect(() => {
+    console.log(editing)
+  }, [editing])
 
   return (
     <div className="order">
@@ -127,43 +147,48 @@ const Order = () => {
       {elements && elements.map((element) => (
         <div className="elementPreview" key={element._id}>
           {element.type === "text" && 
-          <div className="orderElement">
-            <input className="orderNumberInput" value={element.order} type="number"></input>
-            <p>Type: Text</p>
-            {element.topText && <p>Top text: {element.topText}</p>}
-            <p className="elementText">{element.value}</p>
-            {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
-            <p>Duration: {element.duration / 1000} seconds</p>
-            <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
-            <button className="edit" onClick={() => {console.log(element)}}>Edit</button>
+            <div className="orderElement">
+              <input className="orderNumberInput" value={element.order} type="number"></input>
+              <p><p className="fieldName">Type: </p>Text</p>
+              {element.topText && 
+                <p><p className="fieldName">Top text: </p>{element.topText}</p>
+              }
+              {editing === element._id 
+                ? <p className="elementText"><p className="fieldName">Body text: </p><input placeholder={element.value} onChange={(e) => updateElement(element)}></input></p>
+                : <p className="elementText"><p className="fieldName">Body text: </p>{element.value}</p>
+              }
+              
+              {element.bottomText && <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>}
+              <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+              <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>
             </div>
           }
           {element.type === "image" && 
-          <div className="orderElement">
-            <input className="orderNumberInput" value={element.order} type="number"></input>
-            <p>Type: Image</p>
-            {element.topText && <p>Top text: {element.topText}</p>}
-            <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
-            {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
-            <p>Duration: {element.duration / 1000} seconds</p>
-            <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
-            <button className="edit" onClick={() => {console.log(element._id)}}>Edit</button>
-          </div>
+            <div className="orderElement">
+              <input className="orderNumberInput" value={element.order} type="number"></input>
+              <p><p className="fieldName">Type: </p>Image</p>
+              {element.topText && <p><p className="fieldName">Top text: </p>{element.topText}</p>}
+              <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
+              {element.bottomText && <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>}
+              <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+              <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>
+            </div>
           }
           {element.type === "video" && 
-          <div className="orderElement">
-            <input className="orderNumberInput" value={element.order} type="number"></input>
-            <p>Type: Video</p>
-            {element.topText && <p>Top text: {element.topText}</p>}
-            <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
-            {element.bottomText && <p>Bottom text: {element.bottomText}</p>}
-            <p>Duration: {element.duration / 1000} seconds</p>
-            <p className="orderNumber">{element.order}/{elements.length}</p>
-            <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
-            <button className="edit" onClick={() => {console.log(element._id)}}>Edit</button>
-            
+            <div className="orderElement">
+              <input className="orderNumberInput" value={element.order} type="number"></input>
+              <p><p className="fieldName">Type: </p>Video</p>
+              {element.topText && <p><p className="fieldName">Top text: </p>{element.topText}</p>}
+              <YouTube videoId={element.value.split("?v=")[1].split("&")[0]}/>
+              {element.bottomText && <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>}
+              <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="delete" onClick={() => {deleteElement(element._id)}}>Delete</button>
+              <button className="edit" onClick={() => {setEditing(element._id)}}>Edit</button>  
             </div>
           }
         </div>
@@ -171,10 +196,10 @@ const Order = () => {
 
       {checkDuration && 
         <YouTube
-        videoId={elementContent.split("?v=")[1].split("&")[0]}
-        opts={opts}
-        onReady={playerReady}
-      />
+          videoId={elementContent.split("?v=")[1].split("&")[0]}
+          opts={opts}
+          onReady={playerReady}
+        />
       }
 
       {!elements && 

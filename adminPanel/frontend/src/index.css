@@ -201,6 +201,10 @@ header a {
   border-radius: 15px;
   font-size: 20px;
 }
+.orderElement input{
+  border-radius: 5px;
+  font-size: 20px;
+}
 
 .orderElement .delete{
   font-size: 20px;
@@ -211,6 +215,11 @@ header a {
   font-size: 20px;
   background-color: var(--change);
   margin: 0px 20px;
+}
+
+.fieldName{
+  display: inline;
+  color: var(--change);
 }
 
 .elementText{
@@ -224,6 +233,6 @@ header a {
   margin-right: 5px;
   width: 30px;
   position: absolute;
-  left: 1220px;
+  left: 95%;
   font-size: 15px;
 }
