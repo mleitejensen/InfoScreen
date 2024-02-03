@@ -10,6 +10,7 @@
   --success: #1aac83;
   --error: #e7195a;
   --change: #98a336;
+  --loading: #6e705c;
 }
 
 *{
@@ -58,6 +59,10 @@ header a {
 
 * button:hover{
   cursor: pointer;
+}
+
+* button:disabled{
+  background-color: var(--loading);
 }
 
 .pages{
