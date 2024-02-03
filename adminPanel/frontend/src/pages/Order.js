@@ -104,7 +104,6 @@ const Order = () => {
   const updateElement = async (update) => { 
     const {id, type, value, duration, order, topText, bottomText} = update
     console.log(update)
-    /*
     try{
         const response = await fetch("http://localhost:9000/order/update", {
           method: "POST",
@@ -113,9 +112,28 @@ const Order = () => {
         })
     }catch(error){
       console.log(error)
+    }finally{
+      makeAPICall()
+      resetUpdateStates()
     }
-    */
   }
+
+  const startEditing = ((element) => {
+    setEditing(element._id)
+    setUpdateType(element.type)
+    setTopText(element.topText)
+    setUpdateContent(element.value)
+    setBottomText(element.bottomText)
+    setUpdateDuration(element.duration)
+  })
+
+  const resetUpdateStates = (() => {
+    setUpdateType(null)
+    setTopText(null)
+    setUpdateContent(null)
+    setBottomText(null)
+    setUpdateDuration(null)
+  })
 
   const playerReady = ((e) => {
     console.log("player is ready")
@@ -128,10 +146,6 @@ const Order = () => {
     height: '0',
     width: "0"
   };
-
-  useEffect(() => {
-    console.log(editing)
-  }, [editing])
 
   return (
     <div className="order">
@@ -193,7 +207,7 @@ const Order = () => {
                       <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
                     
                     <p><p className="fieldName">Duration: </p>
-                      <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value)}></input>
+                      <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}></input>
                        seconds</p>
                   </div>
                 : // if false
@@ -218,26 +232,20 @@ const Order = () => {
               
               {editing === element._id 
               ? <>
-                <button className="save" disabled={isLoading} onClick={() => {updateElement({id: editing, type: updateType, topText, value: updateContent, bottomText, duration: updateDuration })}}>Save</button>
+                <button className="save" disabled={isLoading} onClick={() => {
+                    updateElement({id: editing, type: updateType, topText, value: updateContent, bottomText, duration: updateDuration })
+                    setEditing(null)
+                  }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
                     setEditing(null)
-                    setUpdateType(element.type)
-                    setTopText(element.topText)
-                    setUpdateContent(element.value)
-                    setBottomText(element.bottomText)
-                    setUpdateDuration(element.duration)
-                  
+                    resetUpdateStates()
                   }}>Cancel</button>
               </>
               : <>
                 <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
                 <button className="edit" disabled={isLoading} onClick={() => {
-                  setEditing(element._id)
-                  setUpdateType(element.type)
-                  setTopText(element.topText)
-                  setUpdateContent(element.value)
-                  setBottomText(element.bottomText)
-                  setUpdateDuration(element.duration)
+                  startEditing(element)
+                  
                 }}>Edit</button>
               </>
               }
