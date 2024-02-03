@@ -127,7 +127,6 @@ const Order = () => {
   })
 
   const resetUpdateStates = (() => {
-    setUpdateType(null)
     setTopText(null)
     setUpdateContent(null)
     setBottomText(null)
