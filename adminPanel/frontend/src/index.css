@@ -10,6 +10,7 @@
   --success: #1aac83;
   --error: #e7195a;
   --change: #98a336;
+  --loading: #6e705c;
 }
 
 *{
@@ -60,6 +61,10 @@ header a {
   cursor: pointer;
 }
 
+* button:disabled{
+  background-color: var(--loading);
+}
+
 .pages{
   max-width: 1400px;
   padding: 20px;
@@ -108,7 +113,7 @@ header a {
   margin: 0px 0px 30px 0px;
 }
 
-.upload label, .upload select{
+.upload label, select{
   font-size: 20px;
   border-radius: 4px;
 }
@@ -193,6 +198,7 @@ header a {
 }
 
 .orderElement{
+  position: relative;
   padding: 10px;
   padding-left: 40px;
   margin: 5px;
@@ -200,14 +206,49 @@ header a {
   border-radius: 15px;
   font-size: 20px;
 }
+.orderElement input{
+  border-radius: 5px;
+  font-size: 20px;
+}
 
-.orderElement button{
+.orderElement .duration{
+  width: 60px;
+}
+
+.orderElement .delete{
   font-size: 20px;
   background-color: var(--error);
 }
 
-.elementText{
-  margin: 0px;
+.orderElement .edit{
+  font-size: 20px;
+  background-color: var(--change);
+  margin: 0px 20px;
+}
+
+.orderElement .save{
+  font-size: 20px;
+  background-color: var(--success);
+}
+
+.orderElement .cancel{
+  font-size: 20px;
+  background-color: var(--error);
+  margin: 0px 20px;
+}
+
+.fieldName{
+  display: inline;
+  color: var(--change);
+}
+
+.editInput{
+  width: 600px;
+}
+
+.toolTip{
+  display: inline;
+  margin: 0px 20px;
 }
 
 .orderNumberInput{
@@ -216,7 +257,8 @@ header a {
   margin-left: auto;
   margin-right: 5px;
   width: 30px;
-  position: relative;
-  bottom: 40px;
+  position: absolute;
+  left: 95%;
   font-size: 15px;
 }
+
