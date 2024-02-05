@@ -9,12 +9,42 @@ const Users = () => {
       
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/users',);
+            const response = await fetch('http://localhost:9000/users');
             let data = await response.json();
             setUsers(data)
         }
         catch (e) {
             console.log(e)
+        }
+    }
+
+    const deleteUser = async (id) => {
+        try{
+            const response = await fetch('http://localhost:9000/users/delete', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id})
+            })
+            console.log(response)
+            makeAPICall()
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const updateUser = async (id) => {
+        try{
+            const response = await fetch('http://localhost:9000/users/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({id})
+            })
+            console.log(response)
+            makeAPICall()
+        }catch(error){
+            console.log(error)
         }
     }
 
@@ -27,7 +57,22 @@ const Users = () => {
                {users && users.map((user) => (
                     <div className="userPreview" key={user._id}>
                         <h2>{user.username}</h2>
-                        <h2>{user.admin}</h2>
+                        <h2>{user.admin === true && "Yes"}{user.admin === false && "No"}</h2>
+                        <button className="userDelete" onClick={() => {
+                            deleteUser(user._id)
+                        }}
+                        >Delete</button>
+                        {user.admin === false && 
+                            <button className="userToAdmin" onClick={() => {
+                                updateUser(user._id)
+                            }}>Make Admin</button>
+                        }
+                        {user.admin === true && 
+                            <button className="userToLoser" onClick={() => {
+                                updateUser(user._id)
+                            }}>Remove Admin</button>
+                        }
+                            
                     </div>
                ))}
                {!users && "Loading..."}

@@ -32,10 +32,21 @@ const deleteElement = async (req, res) => { // deleting element with _id
     let i = 1
     for(const element of elements){ //updating order numbers when deleting elements
       console.log(element)
-      await InfoScreen.findOneAndUpdate(element, {order: i})
+      await InfoScreen.findOneAndUpdate(element, {order: i}, {new: true})
       i++
     }
-    res.status(200).send(del)
+    res.status(200).json(del)
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
+const updateElement = async (req, res) => {
+  const {id, type, value, duration, order, topText, bottomText} = req.body
+  try{
+    const update = await InfoScreen.findOneAndUpdate({_id: id}, { type, value, duration, order, topText, bottomText }, {new: true})
+    console.log(update)
+    res.status(200).json(update)
   }catch(error){
     res.status(400).json({error: error.message})
   }
@@ -45,4 +56,5 @@ module.exports = {
   createElement,
   getElements,
   deleteElement,
+  updateElement,
 }
