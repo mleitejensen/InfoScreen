@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import YouTube from "react-youtube"
 
 const Order = () => {
@@ -115,7 +115,6 @@ const Order = () => {
       }finally{
         makeAPICall()
         resetUpdateStates()
-        setEditing(null)
       }
     }else{
       setUpdateYTDuration(update)
@@ -133,6 +132,7 @@ const Order = () => {
   })
 
   const resetUpdateStates = (() => {
+    setEditing(null)
     setTopText(null)
     setUpdateContent(null)
     setBottomText(null)
@@ -178,6 +178,109 @@ const Order = () => {
       {result && <div className="result">{result}</div>}
       <br /><br />
 
+
+      <h2>Cards Here...</h2>
+      <div className="cardContainer">
+        {elements && elements.map((element) => (
+          <div className="elementCard" key={element._id}>
+            {element.type === "text" ?  // TEXT TYPE
+              <>
+              {editing === element._id ? // if editing
+                <>
+                <p><p className="fieldName">Type: </p>Text</p>
+                <p><p className="fieldName">Top text: </p></p>
+                <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+                <p className="fieldName">Body text: </p>
+                <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+                <p className="fieldName">Bottom text: </p>
+                <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+                <p><p className="fieldName">Duration: </p>
+                  <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
+                </input> seconds</p>
+                <p className="orderNumber">{element.order}/{elements.length}</p>
+                <button className="save" disabled={isLoading} onClick={() => {
+                    updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+                }}>Save</button>
+                <button className="cancel" disabled={isLoading} onClick={() => {
+                  resetUpdateStates()
+                }}>Cancel</button>
+                  
+                </>
+              :     //  if not editing
+                <>
+                <p><p className="fieldName">Type: </p>Text</p>
+                {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+                <p><p className="fieldName">Body Text: </p>{element.value}</p>
+                {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+                <p><p className="fieldName">Duration: </p>{element.duration}</p>
+                <p className="orderNumber">{element.order}/{elements.length}</p>
+                <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
+                <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
+                </>
+              }
+
+              </>
+            : element.type === "image" ? // IMAGE TYPE
+              <>
+              {editing === element._id ? // if editing
+              <>
+              <p><p className="fieldName">Type: </p>Image</p>
+              <p><p className="fieldName">Top text: </p></p>
+              <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <p className="fieldName">Image URL: </p>
+              <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+              <p className="fieldName">Bottom text: </p>
+              <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <p><p className="fieldName">Duration: </p>
+                <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
+              </input> seconds</p>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="save" disabled={isLoading} onClick={() => {
+                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+              }}>Save</button>
+              <button className="cancel" disabled={isLoading} onClick={() => {
+                resetUpdateStates()
+              }}>Cancel</button>
+              </>
+              : // if not editing
+              <>
+              <p><p className="fieldName">Type: </p>Image</p>
+              {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+              <p className="fieldName">Image: </p><img className="elementImage" src={element.value}></img>
+              {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+              <p><p className="fieldName">Duration: </p>{element.duration}</p>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
+              <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
+              </>
+              }
+
+                
+              </>
+            : element.type === "video" ? // VIDEO TYPE
+              <>
+                <p><p className="fieldName">Type: </p>Video</p>
+                {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+                <p className="fieldName">Video: </p>
+                  <YouTube 
+                    videoId={element.value.split("?v=")[1].split("&")[0]} 
+                    opts={{height: "108px", width: "192px"}}
+                  />
+                {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+                <p><p className="fieldName">Duration: </p>{element.duration}</p>
+                <p className="orderNumber">{element.order}/{elements.length}</p>
+                <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
+                <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
+              </>
+            : <>Unknown Element</>
+          
+            }
+            
+            
+            
+          </div>
+        ))}
+      </div>
 
       <h2>Order of elements on info screen</h2>
       {elements && elements.map((element) => (
