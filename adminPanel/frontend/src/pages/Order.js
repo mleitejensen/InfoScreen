@@ -270,11 +270,12 @@ const Order = () => {
               <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
-                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
-              }}>Save</button>
-              <button className="cancel" disabled={isLoading} onClick={() => {
-                resetUpdateStates()
-              }}>Cancel</button>
+                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: 0 })
+                }}>Save</button>
+                <button className="cancel" disabled={isLoading} onClick={() => {
+                  setEditing(null)
+                  resetUpdateStates()
+                }}>Cancel</button>
               </>
               : // if not editing
               <>
@@ -300,8 +301,6 @@ const Order = () => {
           </div>
         ))}
       </div>
-
-      
 
       {checkDuration && 
         <YouTube
