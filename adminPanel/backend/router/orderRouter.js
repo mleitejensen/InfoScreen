@@ -4,7 +4,7 @@ const { createElement, getElements, deleteElement, updateElement } = require("..
 
 router.get("/order", getElements)
 router.post("/order/create", createElement)
-router.post("/order/delete", deleteElement)
+router.delete("/order/delete", deleteElement)
 router.post("/order/update", updateElement)
 
 module.exports = router
