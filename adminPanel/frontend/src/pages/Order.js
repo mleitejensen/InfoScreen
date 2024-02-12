@@ -106,7 +106,7 @@ const Order = () => {
     if(duration > 0){
       try{
           await fetch("http://localhost:9000/order/update", {
-            method: "POST",
+            method: "PATCH",
             headers:  { 'Content-Type': 'application/json', },
             body: JSON.stringify({id, type, value, duration, order, topText, bottomText})
           })
