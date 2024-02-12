@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const router = Router()
-const { createElement, getElements, deleteElement } = require("../controllers/elementController")
+const { createElement, getElements, deleteElement, updateElement } = require("../controllers/elementController")
 
 router.get("/order", getElements)
 router.post("/order/create", createElement)
-router.post("/order/delete", deleteElement)
+router.delete("/order/delete", deleteElement)
+router.patch("/order/update", updateElement)
 
 module.exports = router

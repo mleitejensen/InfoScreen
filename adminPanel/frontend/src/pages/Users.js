@@ -9,7 +9,7 @@ const Users = () => {
       
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/users',);
+            const response = await fetch('http://localhost:9000/users');
             let data = await response.json();
             setUsers(data)
         }
@@ -22,7 +22,9 @@ const Users = () => {
         try{
             const response = await fetch('http://localhost:9000/users/delete', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({id})
             })
             console.log(response)
@@ -55,15 +57,22 @@ const Users = () => {
                {users && users.map((user) => (
                     <div className="userPreview" key={user._id}>
                         <h2>{user.username}</h2>
-                        <h2>{user.admin}</h2>
+                        <h2>{user.admin === true && "Yes"}{user.admin === false && "No"}</h2>
                         <button className="userDelete" onClick={() => {
                             deleteUser(user._id)
                         }}
                         >Delete</button>
-                        <button className="userDelete" onClick={() => {
-                            updateUser(user._id)
-                        }}
-                        >Update User</button>
+                        {user.admin === false && 
+                            <button className="userToAdmin" onClick={() => {
+                                updateUser(user._id)
+                            }}>Make Admin</button>
+                        }
+                        {user.admin === true && 
+                            <button className="userToLoser" onClick={() => {
+                                updateUser(user._id)
+                            }}>Remove Admin</button>
+                        }
+                            
                     </div>
                ))}
                {!users && "Loading..."}

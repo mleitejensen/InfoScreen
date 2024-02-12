@@ -1,7 +1,5 @@
-const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 const User = require("../models/userModel")
-const InfoScreen = require("../models/infoScreenModel")
 
 const createWebToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '1d' })
@@ -28,6 +26,9 @@ const loginUser = async (req, res) => {
 
   try{
     const user = await User.login(username, password)
+    if(user.admin === false){
+      throw Error("You are not an admin")
+    }
     const token = createWebToken(user._id)
     res.status(200).json({username, token})
   }catch(error){
@@ -48,16 +49,16 @@ const deleteUser = async (req, res) => { // deleting element with _id
 const updateUser = async (req, res) => {
   const {id} = req.body
   const find = await User.findById(id)
-  if(find.admin === "no"){
+  if(find.admin === false){
     try{
-      const update = await User.findOneAndUpdate({_id: id}, {admin: "yes"})
+      const update = await User.findOneAndUpdate({_id: id}, {admin: true})
       res.status(200).send(update)
     }catch(error){
       res.status(400).json({error: error.message})
     }
   }else{
     try{
-      const update = await User.findOneAndUpdate({_id: id}, {admin: "no"})
+      const update = await User.findOneAndUpdate({_id: id}, {admin: false})
       res.status(200).send(update)
     }catch(error){
       res.status(400).json({error: error.message})

@@ -72,22 +72,101 @@ function App() {
       <header className="App-header">
           {currentElement &&
             <div>
+
+
             {currentElement.type === "image" && 
-              <img src={currentElement.value} alt="current element"></img>
+              <>
+                {(currentElement.topText && currentElement.bottomText) 
+                ? // if topText and bottomText is true
+                  <div className="bottomAndTopText">
+                    <p>{currentElement.topText}</p>
+                    <img src={currentElement.value} alt="current element"></img>
+                    <p>{currentElement.bottomText}</p>
+                  </div>
+                : // if one or both are false
+                  <>
+                  {(currentElement.topText && !currentElement.bottomText) &&
+                    <div className="topText">
+                      <p>{currentElement.topText}</p>
+                      <img src={currentElement.value} alt="current element"></img>
+                    </div>
+                  }
+                  {(!currentElement.topText && currentElement.bottomText) &&
+                    <div className="bottomText">
+                      <img src={currentElement.value} alt="current element"></img>
+                      <p>{currentElement.bottomText}</p>
+                    </div>
+                  }
+                  {(!currentElement.topText && !currentElement.bottomText) &&
+
+                    <img src={currentElement.value} alt="current element"></img>
+                  
+                  }
+                  </>
+
+                }
+              </>
             }
+
+
             {currentElement.type === "text" && 
-              <div>
-                <p className='text'>{currentElement.value}</p>
+              <div className="bottomAndTopText">
+                <p>{currentElement.topText}</p>
+                <p>{currentElement.value}</p>
+                <p>{currentElement.bottomText}</p>
                 
               </div>
             }
+
+
             {currentElement.type === "video" && 
-              <div>
-                <YouTube
-                  videoId={currentElement.value.split("?v=")[1].split("&")[0]}
-                  opts={opts}
-                />
-              </div>
+
+              <>
+                {(currentElement.topText && currentElement.bottomText)
+                ?
+                  <div className="bottomAndTopText">
+                    <p>{currentElement.topText}</p>
+                    <YouTube
+                      videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                      opts={opts}
+                    />
+                    <p>{currentElement.bottomText}</p>
+                  </div>
+                : 
+                  <>
+                    {(currentElement.topText && !currentElement.bottomText) &&
+                      <div className="topText">
+                        <p>{currentElement.topText}</p>
+                        <YouTube
+                          videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                          opts={opts}
+                        />
+                      </div>
+                    }
+
+                    {(!currentElement.topText && currentElement.bottomText) &&
+                      <div className="bottomText">
+                        <YouTube
+                          videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                          opts={opts}
+                        />
+                        <p>{currentElement.bottomText}</p>
+                      </div>
+                    }
+
+                    {(!currentElement.topText && !currentElement.bottomText) &&
+                      <YouTube
+                        videoId={currentElement.value.split("?v=")[1].split("&")[0]}
+                        opts={opts}
+                      />
+                    }
+                  
+                  </>
+                }
+
+
+
+              </>
             }
             </div>
           }
