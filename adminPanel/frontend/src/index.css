@@ -276,7 +276,7 @@ header a {
   max-width: 300px;
   max-height: 400px;
   width: 300px;
-  height: 300px;
+  height: 400px;
   margin: 10px 15px;
   padding: 10px 20px;
   border-radius: 5px;
@@ -321,7 +321,7 @@ header a {
 .elementImage{
   display: block;
   margin: auto;
-  max-height: 90px;
+  max-height: 150px;
   max-width: 100px;
   height: 100%;
   width: 100%;
