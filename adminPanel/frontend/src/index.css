@@ -283,6 +283,7 @@ header a {
   border-radius: 5px;
   background-color: var(--secondary);
   box-shadow: 1px -3px 10px #121416;
+  word-wrap: break-word
 }
 
 .elementCard .orderNumber{
