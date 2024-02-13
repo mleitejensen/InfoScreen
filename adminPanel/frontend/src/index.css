@@ -9,7 +9,7 @@
   --text: white;
   --success: #1aac83;
   --error: #e7195a;
-  --change: #98a336;
+  --change: #F66B0E;
   --loading: #6e705c;
 }
 
@@ -71,7 +71,7 @@ header a {
   margin: 0 auto;
 }
 
-/* homepage */
+/* home Page / Login Page */
 .home h2{
   text-align: center;
   font-size: 50px
@@ -113,6 +113,8 @@ header a {
   margin: 0px 0px 30px 0px;
 }
 
+/* Order Page */
+
 .upload label, select{
   font-size: 20px;
   border-radius: 4px;
@@ -149,6 +151,112 @@ header a {
   color: var(--text);
   font-size: 20px;
 }
+
+.fieldName{
+  display: inline;
+  color: var(--change);
+}
+
+.editInput{
+  width: 300px;
+  margin: 2px 0px 10px 0px;
+}
+
+.cardContainer{
+  display: flex;
+  max-width: 1700px;
+  overflow: auto;
+  
+}
+
+.elementCard{
+  position: relative;
+  min-width: 300px;
+  min-height: 200px;
+  max-width: 300px;
+  max-height: 400px;
+  width: 300px;
+  height: 400px;
+  margin: 10px 15px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--secondary);
+  box-shadow: 1px -3px 10px #121416;
+  word-wrap: break-word
+}
+
+.elementCard .orderNumber{
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+}
+
+.elementCard .delete{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--error);
+}
+.elementCard .edit{
+  position: absolute;
+  bottom: 10px;
+  right: 80px;
+  background-color: var(--change);
+}
+.elementCard .save{
+  position: absolute;
+  bottom: 10px;
+  right: 80px;
+  background-color: var(--success);
+}
+.elementCard .cancel{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--error);
+}
+.elementCard .duration{
+  width: 50px;
+}
+
+.elementImage{
+  border: 1px solid black;
+  background-color: #121416;
+  display: flex;
+  margin: 10px auto;
+  max-height: 150px;
+  max-width: 300px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.elementVideo iframe  {
+  margin: 10px 10px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 15px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(41, 34, 34);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* User Page */
 
 .userPreview{
   justify-content: center;
@@ -192,73 +300,3 @@ header a {
   border: 1px solid black;
   margin: 0px;
 }
-
-.elementPreview{
-  display: inline;
-}
-
-.orderElement{
-  position: relative;
-  padding: 10px;
-  padding-left: 40px;
-  margin: 5px;
-  background-color: var(--secondary);
-  border-radius: 15px;
-  font-size: 20px;
-}
-.orderElement input{
-  border-radius: 5px;
-  font-size: 20px;
-}
-
-.orderElement .duration{
-  width: 60px;
-}
-
-.orderElement .delete{
-  font-size: 20px;
-  background-color: var(--error);
-}
-
-.orderElement .edit{
-  font-size: 20px;
-  background-color: var(--change);
-  margin: 0px 20px;
-}
-
-.orderElement .save{
-  font-size: 20px;
-  background-color: var(--success);
-}
-
-.orderElement .cancel{
-  font-size: 20px;
-  background-color: var(--error);
-  margin: 0px 20px;
-}
-
-.fieldName{
-  display: inline;
-  color: var(--change);
-}
-
-.editInput{
-  width: 600px;
-}
-
-.toolTip{
-  display: inline;
-  margin: 0px 20px;
-}
-
-.orderNumberInput{
-  border-radius: 8px;
-  display: block;
-  margin-left: auto;
-  margin-right: 5px;
-  width: 30px;
-  position: absolute;
-  left: 95%;
-  font-size: 15px;
-}
-
