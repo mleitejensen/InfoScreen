@@ -207,6 +207,7 @@ const Order = () => {
                 </>
               :     //  if not editing
                 <>
+                {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
                 <p><p className="fieldName">Type: </p>Text</p>
                 {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
                 <p><p className="fieldName">Body Text: </p>{element.value}</p>
@@ -243,6 +244,7 @@ const Order = () => {
               </>
               : // if not editing
               <>
+              {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
               <p><p className="fieldName">Type: </p>Image</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Image: </p>
@@ -261,10 +263,10 @@ const Order = () => {
               <>
               {editing === element._id ? // if editing
               <>
-              <p><p className="fieldName">Type: </p>Image</p>
+              <p><p className="fieldName">Type: </p>Video</p>
               <p className="fieldName">Top text: </p>
               <input className="editInput" maxlength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-              <p className="fieldName">Image URL: </p>
+              <p className="fieldName">Youtube Video URL: </p>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
               <p className="fieldName">Bottom text: </p>
               <input className="editInput" maxlength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
@@ -280,6 +282,7 @@ const Order = () => {
               </>
               : // if not editing
               <>
+              {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
               <p><p className="fieldName">Type: </p>Video</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Video: </p>

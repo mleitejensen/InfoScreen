@@ -235,6 +235,31 @@ header a {
   margin: 10px 10px;
 }
 
+.elementCard .leftArrow{
+  position: absolute;
+  top: -30px;
+  right: 60px;
+  font-size: 40px;
+  padding: 0px;
+  border: 1px solid #121416;
+}
+.elementCard .rightArrow{
+  position: absolute;
+  top: -30px;
+  right: 10px;
+  font-size: 40px;
+  padding: 0px;
+  border: 1px solid #121416;
+}
+
+.elementCard .leftArrow:hover{
+  cursor: pointer;
+}
+.elementCard .rightArrow:hover{
+  cursor: pointer;
+}
+
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 15px;
