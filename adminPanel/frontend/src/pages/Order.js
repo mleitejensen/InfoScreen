@@ -203,7 +203,6 @@ const Order = () => {
       </form>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
-      <br /><br />
 
 
       <h2>Order of elements on info screen</h2>
