@@ -52,9 +52,33 @@ const updateElement = async (req, res) => {
   }
 }
 
+const moveOrderOfElement = async (req ,res) => {
+  const {id, direction} = req.body
+  let movingElement = await InfoScreen.findOne({_id: id})
+  const elements = await InfoScreen.find({}).sort({order: +1})
+  try{
+    if(direction === "up"){
+      //let element = await InfoScreen.findOneAndUpdate(movingElement, {order: movingElement.order + 1})
+      movingElement.set({order: movingElement.order + 1})
+      let movingDown = await InfoScreen.findOne({order: movingElement.order + 1 })
+      console.log(movingElement.order)
+      // replace everything other than order
+      res.status(200).json({ movingElement })
+    }else if( direction === "down"){
+      let element = await InfoScreen.findOne({order: (movingElement.order - 1)})
+      res.status(200).json({element, elements})
+    }
+
+  }catch(error){
+    res.status(400).json({error: error.message})
+  }
+
+}
+
 module.exports = {
   createElement,
   getElements,
   deleteElement,
   updateElement,
+  moveOrderOfElement,
 }
