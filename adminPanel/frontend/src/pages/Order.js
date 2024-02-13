@@ -35,7 +35,8 @@ const Order = () => {
 
   const getLength = (e) => {
     e.preventDefault()
-    e.target.reset()
+    console.log(e.target)
+    //e.target.reset()
     setIsLoading(true)
     setError(null)
     setResult(null)
@@ -143,6 +144,17 @@ const Order = () => {
     setDuration(e.target.getDuration() * 1000)
     setCheckDuration(false)
   })
+
+  const checkVideoId = () => {
+    try{
+      let validId = elementContent.split("?v=")[1].split("&")[0]
+      return validId
+    }catch(error){
+      setError("Invalid Youtube video URL")
+      setCheckDuration(false)
+      setIsLoading(false)
+    }
+  }
 
   const updateDurationPlayer = async (e) => {
     let ytLength = await e.target.getDuration() * 1000
@@ -326,7 +338,7 @@ const Order = () => {
 
       {checkDuration && 
         <YouTube
-          videoId={elementContent.split("?v=")[1].split("&")[0]}
+          videoId={checkVideoId()}
           opts={{height: "0", width: "0"}}
           onReady={playerReady}
         />

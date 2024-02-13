@@ -185,6 +185,10 @@ header a {
   word-wrap: break-word
 }
 
+.elementCard p{
+  margin: 10px 0px;
+}
+
 .elementCard .orderNumber{
   position: absolute;
   bottom: 0;
