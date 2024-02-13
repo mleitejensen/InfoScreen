@@ -54,12 +54,17 @@ const updateElement = async (req, res) => {
 
 const moveOrderOfElement = async (req ,res) => {
   const {id, direction} = req.body
-  let movingElement = await InfoScreen.findOne({_id: id})
+  let elementToMove = await InfoScreen.findOne({_id: id})
   const elements = await InfoScreen.find({}).sort({order: +1})
   try{
     if(direction === "up"){
+       let elementToTakePlace = await InfoScreen.findOne({order: elementToMove.order + 1})
       //let element = await InfoScreen.findOneAndUpdate(movingElement, {order: movingElement.order + 1})
-      movingElement.set({order: movingElement.order + 1})
+      let move = await InfoScreen.findOneAndUpdate(elementToMove, {
+        _id: elementToTakePlace._id, 
+        type: elementToTakePlace.type,
+        value: elementToTakePlace.value
+      })
       let movingDown = await InfoScreen.findOne({order: movingElement.order + 1 })
       console.log(movingElement.order)
       // replace everything other than order
