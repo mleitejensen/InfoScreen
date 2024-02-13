@@ -151,6 +151,21 @@ const Order = () => {
     setUpdateYTDuration(false)
   }
 
+  const updateOrder = async (id, direction) => {
+    try{
+      await fetch("http://localhost:9000/order/update/number", {
+        method: "PATCH",
+        headers:  { 'Content-Type': 'application/json', },
+        body: JSON.stringify({id, direction})
+      })
+    }catch(error){
+      setError(error)
+      console.log(error)
+    }finally{
+      makeAPICall()
+    }
+  }
+
   return (
     <div className="order">
       <form className="upload" onSubmit={getLength}>
@@ -207,8 +222,8 @@ const Order = () => {
                 </>
               :     //  if not editing TEXT TYPE
                 <>
-                {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click arrow")}}>&#8592;</button>}
-                {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click arrow")}}>&#8594;</button>}
+                {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+                {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
                 <p><p className="fieldName">Type: </p>Text</p>
                 {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
                 <p><p className="fieldName">Body Text: </p>{element.value}</p>
@@ -245,8 +260,8 @@ const Order = () => {
               </>
               : // if not editing IMAGE TYPE
               <>
-              {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click left arrow")}}>&#8592;</button>}
-              {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click right arrow")}}>&#8594;</button>}
+              {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
               <p><p className="fieldName">Type: </p>Image</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Image: </p>
@@ -284,8 +299,8 @@ const Order = () => {
               </>
               : // if not editing VIDOE TYPE
               <>
-              {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click arrow")}}>&#8592;</button>}
-              {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click arrow")}}>&#8594;</button>}
+              {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
               <p><p className="fieldName">Type: </p>Video</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Video: </p>
