@@ -6,6 +6,6 @@ router.get("/order", getElements)
 router.post("/order/create", createElement)
 router.delete("/order/delete", deleteElement)
 router.patch("/order/update", updateElement)
-router.patch("/order/update/number", moveOrderOfElement)
+router.patch("/order/update/index", moveOrderOfElement)
 
 module.exports = router

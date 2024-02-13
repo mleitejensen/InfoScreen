@@ -153,7 +153,7 @@ const Order = () => {
 
   const updateOrder = async (id, direction) => {
     try{
-      await fetch("http://localhost:9000/order/update/number", {
+      await fetch("http://localhost:9000/order/update/index", {
         method: "PATCH",
         headers:  { 'Content-Type': 'application/json', },
         body: JSON.stringify({id, direction})
