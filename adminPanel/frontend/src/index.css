@@ -237,7 +237,7 @@ header a {
 
 .elementCard .leftArrow{
   position: absolute;
-  top: -30px;
+  top: 5px;
   right: 60px;
   font-size: 40px;
   padding: 0px;
@@ -245,20 +245,12 @@ header a {
 }
 .elementCard .rightArrow{
   position: absolute;
-  top: -30px;
+  top: 5px;
   right: 10px;
   font-size: 40px;
   padding: 0px;
   border: 1px solid #121416;
 }
-
-.elementCard .leftArrow:hover{
-  cursor: pointer;
-}
-.elementCard .rightArrow:hover{
-  cursor: pointer;
-}
-
 
 ::-webkit-scrollbar {
   width: 10px;

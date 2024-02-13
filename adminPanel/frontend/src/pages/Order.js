@@ -185,7 +185,7 @@ const Order = () => {
           <div className="elementCard" key={element._id}>
             {element.type === "text" ?  // TEXT TYPE
               <>
-              {editing === element._id ? // if editing
+              {editing === element._id ? // if editing TEXT TYPE
                 <>
                 <p><p className="fieldName">Type: </p>Text</p>
                 <p className="fieldName">Top text: </p>
@@ -205,9 +205,10 @@ const Order = () => {
                   resetUpdateStates()
                 }}>Cancel</button>
                 </>
-              :     //  if not editing
+              :     //  if not editing TEXT TYPE
                 <>
-                {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
+                {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click arrow")}}>&#8592;</button>}
+                {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click arrow")}}>&#8594;</button>}
                 <p><p className="fieldName">Type: </p>Text</p>
                 {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
                 <p><p className="fieldName">Body Text: </p>{element.value}</p>
@@ -222,7 +223,7 @@ const Order = () => {
               </>
             : element.type === "image" ? // IMAGE TYPE
               <>
-              {editing === element._id ? // if editing
+              {editing === element._id ? // if editing IMAGE TYPE
               <>
               <p><p className="fieldName">Type: </p>Image</p>
               <p className="fieldName">Top text: </p>
@@ -242,9 +243,10 @@ const Order = () => {
                 resetUpdateStates()
               }}>Cancel</button>
               </>
-              : // if not editing
+              : // if not editing IMAGE TYPE
               <>
-              {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
+              {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click left arrow")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click right arrow")}}>&#8594;</button>}
               <p><p className="fieldName">Type: </p>Image</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Image: </p>
@@ -261,7 +263,7 @@ const Order = () => {
               </>
             : element.type === "video" ? // VIDEO TYPE
               <>
-              {editing === element._id ? // if editing
+              {editing === element._id ? // if editing VIDEO TYPE
               <>
               <p><p className="fieldName">Type: </p>Video</p>
               <p className="fieldName">Top text: </p>
@@ -280,9 +282,10 @@ const Order = () => {
                   resetUpdateStates()
                 }}>Cancel</button>
               </>
-              : // if not editing
+              : // if not editing VIDOE TYPE
               <>
-              {element.order > 1 && <p className="leftArrow">&#8592;</p>}{element.order < elements.length && <p className="rightArrow">&#8594;</p>}
+              {element.order > 1 && <button className="leftArrow" onClick={() => {console.log("Click arrow")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {console.log("Click arrow")}}>&#8594;</button>}
               <p><p className="fieldName">Type: </p>Video</p>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Video: </p>
