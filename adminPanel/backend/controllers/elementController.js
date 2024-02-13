@@ -54,24 +54,55 @@ const updateElement = async (req, res) => {
 
 const moveOrderOfElement = async (req ,res) => {
   const {id, direction} = req.body
-  let elementToMove = await InfoScreen.findOne({_id: id})
-  const elements = await InfoScreen.find({}).sort({order: +1})
+  const elementToMove = await InfoScreen.findOne({_id: id})
+  const elements = await InfoScreen.find({})
   try{
     if(direction === "up"){
-       let elementToTakePlace = await InfoScreen.findOne({order: elementToMove.order + 1})
-      //let element = await InfoScreen.findOneAndUpdate(movingElement, {order: movingElement.order + 1})
-      let move = await InfoScreen.findOneAndUpdate(elementToMove, {
-        _id: elementToTakePlace._id, 
+      if(elements.length < (elementToMove.order + 1)){
+        throw Error("Element is already at the last position")
+      }
+      const elementToTakePlace = await InfoScreen.findOne({order: elementToMove.order + 1})
+      // replace everything other than order and _id
+      const moveUp = await InfoScreen.findOneAndUpdate(elementToMove, {
         type: elementToTakePlace.type,
-        value: elementToTakePlace.value
+        value: elementToTakePlace.value,
+        topText: elementToTakePlace.topText,
+        bottomText: elementToTakePlace.bottomText,
+        duration: elementToTakePlace.duration
       })
-      let movingDown = await InfoScreen.findOne({order: movingElement.order + 1 })
-      console.log(movingElement.order)
-      // replace everything other than order
-      res.status(200).json({ movingElement })
+
+      const moveDown = await InfoScreen.findOneAndUpdate(elementToTakePlace, {
+        type: elementToMove.type,
+        value: elementToMove.value,
+        topText: elementToMove.topText,
+        bottomText: elementToMove.bottomText,
+        duration: elementToMove.duration
+      })
+      res.status(200).json({movedUp: moveUp, movedDown: moveDown })
     }else if( direction === "down"){
-      let element = await InfoScreen.findOne({order: (movingElement.order - 1)})
-      res.status(200).json({element, elements})
+      if(elements.length < (elementToMove.order - 1)){
+        throw Error("Element is already at the first position")
+      }
+      const elementToTakePlace = await InfoScreen.findOne({order: elementToMove.order - 1})
+      
+      const moveDown = await InfoScreen.findOneAndUpdate(elementToMove, {
+        type: elementToTakePlace.type,
+        value: elementToTakePlace.value,
+        topText: elementToTakePlace.topText,
+        bottomText: elementToTakePlace.bottomText,
+        duration: elementToTakePlace.duration
+
+      })
+
+      const moveUp = await InfoScreen.findOneAndUpdate(elementToTakePlace, {
+        type: elementToMove.type,
+        value: elementToMove.value,
+        topText: elementToMove.topText,
+        bottomText: elementToMove.bottomText,
+        duration: elementToMove.duration
+      })
+
+      res.status(200).json({movedDown: moveDown, movedUp: moveUp})
     }
 
   }catch(error){
