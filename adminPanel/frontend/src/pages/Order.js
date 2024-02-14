@@ -180,32 +180,54 @@ const Order = () => {
 
   return (
     <div className="order">
-      <form className="upload" onSubmit={getLength}>
-        <div className="formTitle">Upload something to show on the info panel</div>
-        <label>Choose a type: </label>
-        <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-          <option value="text">Text</option>
-          <option value="image">Image</option>
-          <option value="video">Video</option>
-        </select><br/><br/>
-        <label>Insert content: </label>
-        {type === "text" && 
-          <input type="text" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }
-        {type === "image" && 
-          <input type="text" placeholder="google.com/d3423431..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }
-        {type === "video" && 
-          <input type="text" placeholder="youtube.com/..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }        
-        <br/><br/>
-        <button disabled={isLoading}>Upload</button>
-      </form>
+      <div className="uploadAndInfoContainer">
+        <form className="upload" onSubmit={getLength}>
+          <div className="uploadFormTitle">Upload to the Info Screen</div>
+          <label>Choose a type: </label>
+          <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select><br/><br/>
+          <label for="content">Insert content: </label><br></br>
+          {type === "text" && 
+            <textarea cols={45} rows={4} maxLength="100" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></textarea>
+          }
+          {type === "image" && 
+            <input type="text" placeholder="google.com/d3423431..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          }
+          {type === "video" && 
+            <input type="text" placeholder="youtube.com/..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          }        
+          <br/><br/>
+          <button disabled={isLoading}>Upload</button>
+        </form>
+
+        <div className="info">
+          
+          <h1 className="uploadFormTitle">How to upload</h1>
+          <p>First choose a type in the box to the left, either text, image or video.</p>
+
+          <p>If you chose text, write anything you want to show up on the info screen.</p>
+          <p>
+            If you chose image, find an image on the internett and copy the image address into the input field 
+            &#40; make sure its the image address and not the website address	&#41;.
+          </p>
+          <p>
+            If you chose video, find a video on youtube and copy the URL into the input field.
+          </p>
+
+          <p>After choosing a type and filling in the input field, click the upload button or press enter.</p>
+
+
+        </div>
+
+      </div>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
 
 
-      <h2>Order of elements on info screen</h2>
+      <h2 className="orderTitle">Order of elements on info screen</h2>
       <div className="cardContainer">
         {elements && elements.map((element) => (
           <div className="elementCard" key={element._id}>
@@ -215,11 +237,11 @@ const Order = () => {
                 <>
                 <div><p className="fieldName">Type: </p>Text</div>
                 <p className="fieldName">Top text: </p>
-                <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+                <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
                 <p className="fieldName">Body text: </p>
                 <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
                 <p className="fieldName">Bottom text: </p>
-                <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+                <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
                 <div><p className="fieldName">Duration: </p>
                   <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
                 </input> seconds</div>
@@ -253,11 +275,11 @@ const Order = () => {
               <>
               <div><p className="fieldName">Type: </p>Image</div>
               <p className="fieldName">Top text: </p>
-              <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
               <p className="fieldName">Image URL: </p>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
               <p className="fieldName">Bottom text: </p>
-              <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
               <div><p className="fieldName">Duration: </p>
                 <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
               </input> seconds</div>
@@ -293,11 +315,11 @@ const Order = () => {
               <>
               <div><p className="fieldName">Type: </p>Video</div>
               <p className="fieldName">Top text: </p>
-              <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
               <p className="fieldName">Youtube Video URL: </p>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
               <p className="fieldName">Bottom text: </p>
-              <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
               <div><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
