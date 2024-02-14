@@ -190,13 +190,13 @@ const Order = () => {
         </select><br/><br/>
         <label>Insert content: </label>
         {type === "text" && 
-          <input type="text" placeholder="write anything..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          <input type="text" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
         }
         {type === "image" && 
-          <input type="text" placeholder="google.com/d3423431..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          <input type="text" placeholder="google.com/d3423431..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
         }
         {type === "video" && 
-          <input type="text" placeholder="youtube.com/..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          <input type="text" placeholder="youtube.com/..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
         }        
         <br/><br/>
         <button disabled={isLoading}>Upload</button>
@@ -215,11 +215,11 @@ const Order = () => {
                 <>
                 <p><p className="fieldName">Type: </p>Text</p>
                 <p className="fieldName">Top text: </p>
-                <input className="editInput" maxlength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+                <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
                 <p className="fieldName">Body text: </p>
                 <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
                 <p className="fieldName">Bottom text: </p>
-                <input className="editInput" maxlength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+                <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
                 <p><p className="fieldName">Duration: </p>
                   <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
                 </input> seconds</p>
@@ -253,11 +253,11 @@ const Order = () => {
               <>
               <p><p className="fieldName">Type: </p>Image</p>
               <p className="fieldName">Top text: </p>
-              <input className="editInput" maxlength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
               <p className="fieldName">Image URL: </p>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
               <p className="fieldName">Bottom text: </p>
-              <input className="editInput" maxlength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
               <p><p className="fieldName">Duration: </p>
                 <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
               </input> seconds</p>
@@ -293,11 +293,11 @@ const Order = () => {
               <>
               <p><p className="fieldName">Type: </p>Video</p>
               <p className="fieldName">Top text: </p>
-              <input className="editInput" maxlength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <input className="editInput" maxLength="35" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
               <p className="fieldName">Youtube Video URL: </p>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
               <p className="fieldName">Bottom text: </p>
-              <input className="editInput" maxlength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <input className="editInput" maxLength="35" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
               <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
