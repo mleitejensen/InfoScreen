@@ -345,7 +345,7 @@ header a {
 .userPreview{
   justify-content: center;
   display: grid;
-  grid-template-columns: 400px 400px 80px 80px;
+  grid-template-columns: 400px 400px 100px 100px;
   font-size: 20px;
   color: var(--text);
 }
@@ -360,6 +360,8 @@ header a {
 
 .userToAdmin{
   background-color: var(--success);
+  margin: 2px auto;
+  width: 90px;
 }
 
 .userToLoser{
@@ -368,12 +370,14 @@ header a {
 
 .userDelete{
   background-color: var(--error);
+  margin: 2px auto;
+  width: 90px;
 }
 
 .listTitle{
   justify-content: center;
   display: grid;
-  grid-template-columns: 400px 400px 80px 80px;
+  grid-template-columns: 400px 400px 100px 100px;
   font-size: 20px;
   color: var(--text);
 }
