@@ -71,6 +71,10 @@ header a {
 
 /* home Page / Login Page */
 .home h2{
+  background-color: var(--tertiary);
+  box-shadow: 3px 3px 7px black;
+  border-radius: 5px;
+  padding: 10px 0px;
   text-align: center;
   font-size: 50px
 }
@@ -81,7 +85,11 @@ header a {
 }
 
 .login{
+  background-color: var(--tertiary);
+  box-shadow: 3px 3px 7px black;
+  padding: 20px 30px;
   margin-top: 50px;
+  border-radius: 5px;
   position: absolute;
   top: 30%;
   left: 25%;
@@ -98,7 +106,11 @@ header a {
 }
 
 .signup{
+  background-color: var(--tertiary);
+  box-shadow: 3px 3px 7px black;
+  padding: 20px 30px;
   margin-top: 50px;
+  border-radius: 5px;
   position: absolute;
   top: 30%;
   right: 25%;
