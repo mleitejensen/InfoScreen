@@ -1,8 +1,8 @@
 /* layout */
 :root {
-  --primary: #282c34;
-  --secondary: #1e2229;
-  --tertiary: #121416;
+  --primary: rgb(28, 31, 34);
+  --secondary: black;
+  --tertiary: #27292b;
   --text: white;
   --success: #1aac83;
   --error: #e7195a;
@@ -120,7 +120,8 @@ header a {
 }
 
 .info{
-  box-shadow: 3px 3px 15px #121416;
+  background-color: var(--tertiary);
+  box-shadow: 1px 1px 20px var(--tertiary);
   border-radius: 5px;
   padding: 10px;
   overflow: auto;
@@ -130,7 +131,8 @@ header a {
 .upload{
   position: relative;
   display: flexbox;
-  box-shadow: 3px 3px 15px #121416;
+  background-color: var(--tertiary);
+  box-shadow: 3px 3px 15px var(--tertiary);
   border-radius: 5px;
   width: 600px;
   height: 300px;
@@ -229,8 +231,8 @@ header a {
   margin: 10px 15px;
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: var(--secondary);
-  box-shadow: 1px -3px 10px #121416;
+  background-color: var(--tertiary);
+  box-shadow: 1px -3px 10px var(--tertiary);
   word-wrap: break-word
 }
 
@@ -331,7 +333,7 @@ header a {
 .userPreview{
   justify-content: center;
   display: grid;
-  grid-template-columns: 200px 200px 80px 80px;
+  grid-template-columns: 400px 400px 80px 80px;
   font-size: 20px;
   color: var(--text);
 }
@@ -341,7 +343,7 @@ header a {
   padding: 5px;
   text-align: center;
   border: 1px solid black;
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
 }
 
 .userToAdmin{
@@ -359,13 +361,13 @@ header a {
 .listTitle{
   justify-content: center;
   display: grid;
-  grid-template-columns: 200px 200px 80px 80px;
+  grid-template-columns: 400px 400px 80px 80px;
   font-size: 20px;
   color: var(--text);
 }
 
 .listTitle h2{
-  background-color: var(--tertiary);
+  background-color: var(--secondary);
   text-align: center;
   border: 1px solid black;
   margin: 0px;
