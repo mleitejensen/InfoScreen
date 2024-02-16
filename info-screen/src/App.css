@@ -39,7 +39,7 @@ iframe{
 .bottomAndTopText{
   display: grid;
   grid-template-rows: 200px 680px 200px;
-  font-size: 40px;
+  font-size: 5.5vw;
 }
 
 .bottomAndTopText iframe{
