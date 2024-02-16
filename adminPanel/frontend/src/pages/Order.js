@@ -298,7 +298,7 @@ const Order = () => {
               <div><p className="fieldName">Type: </p>Image</div>
               {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
               <p className="fieldName">Image: </p>
-              <img className="elementImage" src={element.value}></img>
+              <img className="elementImage" alt={"Image from index " + element.order} src={element.value}></img>
               {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
               <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
