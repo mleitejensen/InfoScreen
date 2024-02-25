@@ -24,7 +24,7 @@ const Order = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:9000/order');
+      const response = await fetch('http://10.12.6.97/order');
       let data = await response.json();
       setElements(data)
     }
@@ -57,7 +57,7 @@ const Order = () => {
   }, [duration])
 
   const createElement = async () => {
-    const response = await fetch('http://localhost:9000/order/create', {
+    const response = await fetch('http://10.12.6.97/order/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', },
       body: JSON.stringify({ type, value: elementContent, duration })
@@ -79,7 +79,7 @@ const Order = () => {
   const deleteElement = async (id) => {
     console.log(id)
     try{ 
-        const response = await fetch('http://localhost:9000/order/delete', {
+        const response = await fetch('http://10.12.6.97/order/delete', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json', },
           body: JSON.stringify({id: id })
@@ -106,7 +106,7 @@ const Order = () => {
     const {id, type, value, duration, order, topText, bottomText} = update
     if(duration > 0){
       try{
-          await fetch("http://localhost:9000/order/update", {
+          await fetch("http://10.12.6.97/order/update", {
             method: "PATCH",
             headers:  { 'Content-Type': 'application/json', },
             body: JSON.stringify({id, type, value, duration, order, topText, bottomText})
@@ -165,7 +165,7 @@ const Order = () => {
 
   const updateOrder = async (id, direction) => {
     try{
-      await fetch("http://localhost:9000/order/update/index", {
+      await fetch("http://10.12.6.97/order/update/index", {
         method: "PATCH",
         headers:  { 'Content-Type': 'application/json', },
         body: JSON.stringify({id, direction})

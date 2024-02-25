@@ -14,7 +14,7 @@ const Signup = () => {
         setError(null)
         setResult(null)
     
-        const response = await fetch('http://localhost:9000/signup',{
+        const response = await fetch('http://10.12.6.97/signup',{
             method: 'POST',
             headers: {'Content-Type': 'application/json',},
             body: JSON.stringify({ username, password})

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 function Test() {
   const [message, setMessage] = useState('');
   useEffect(() => {
-    fetch('http://localhost:9000')
+    fetch('http://10.12.6.97')
       .then((res) => res.text())
       .then((data) => setMessage(data))
       .catch((err) => console.log(err));

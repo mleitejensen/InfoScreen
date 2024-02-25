@@ -9,7 +9,7 @@ const Users = () => {
       
     const makeAPICall = async () => {
         try {
-            const response = await fetch('http://localhost:9000/users');
+            const response = await fetch('http://10.12.6.97/users');
             let data = await response.json();
             setUsers(data)
         }
@@ -20,7 +20,7 @@ const Users = () => {
 
     const deleteUser = async (id) => {
         try{
-            const response = await fetch('http://localhost:9000/users/delete', {
+            const response = await fetch('http://10.12.6.97/users/delete', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const Users = () => {
 
     const updateUser = async (id) => {
         try{
-            const response = await fetch('http://localhost:9000/users/update', {
+            const response = await fetch('http://10.12.6.97/users/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', },
                 body: JSON.stringify({id})
