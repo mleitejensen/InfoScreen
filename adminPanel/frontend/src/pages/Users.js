@@ -57,22 +57,18 @@ const Users = () => {
                {users && users.map((user) => (
                     <div className="userPreview" key={user._id}>
                         <h2>{user.username}</h2>
-                        <h2>{user.admin === true && "Yes"}{user.admin === false && "No"}</h2>
-                        <button className="userDelete" onClick={() => {
-                            deleteUser(user._id)
-                        }}
-                        >Delete</button>
+                        <h2>{user.admin === true && <>&#10003;</>}{user.admin === false && <>&#215;</>}</h2>
                         {user.admin === false && 
+                        <>
+                            <button className="userDelete" onClick={() => {
+                                deleteUser(user._id)
+                            }}
+                            >Delete</button>
                             <button className="userToAdmin" onClick={() => {
                                 updateUser(user._id)
                             }}>Make Admin</button>
-                        }
-                        {user.admin === true && 
-                            <button className="userToLoser" onClick={() => {
-                                updateUser(user._id)
-                            }}>Remove Admin</button>
-                        }
-                            
+                        </>
+                        }     
                     </div>
                ))}
                {!users && "Loading..."}
