@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import YouTube from "react-youtube"
 
 const Order = () => {
@@ -35,7 +35,8 @@ const Order = () => {
 
   const getLength = (e) => {
     e.preventDefault()
-    e.target.reset()
+    console.log(e.target)
+    //e.target.reset()
     setIsLoading(true)
     setError(null)
     setResult(null)
@@ -115,7 +116,6 @@ const Order = () => {
       }finally{
         makeAPICall()
         resetUpdateStates()
-        setEditing(null)
       }
     }else{
       setUpdateYTDuration(update)
@@ -133,6 +133,7 @@ const Order = () => {
   })
 
   const resetUpdateStates = (() => {
+    setEditing(null)
     setTopText(null)
     setUpdateContent(null)
     setBottomText(null)
@@ -144,6 +145,17 @@ const Order = () => {
     setCheckDuration(false)
   })
 
+  const checkVideoId = () => {
+    try{
+      let validId = elementContent.split("?v=")[1].split("&")[0]
+      return validId
+    }catch(error){
+      setError("Invalid Youtube video URL")
+      setCheckDuration(false)
+      setIsLoading(false)
+    }
+  }
+
   const updateDurationPlayer = async (e) => {
     let ytLength = await e.target.getDuration() * 1000
     const {id, type, value, order, topText, bottomText} = updateYTDuration
@@ -151,211 +163,203 @@ const Order = () => {
     setUpdateYTDuration(false)
   }
 
+  const updateOrder = async (id, direction) => {
+    try{
+      await fetch("http://localhost:9000/order/update/index", {
+        method: "PATCH",
+        headers:  { 'Content-Type': 'application/json', },
+        body: JSON.stringify({id, direction})
+      })
+    }catch(error){
+      setError(error)
+      console.log(error)
+    }finally{
+      makeAPICall()
+    }
+  }
+
   return (
     <div className="order">
-      <form className="upload" onSubmit={getLength}>
-        <div className="formTitle">Upload something to show on the info panel</div>
-        <label>Choose a type: </label>
-        <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-          <option value="text">Text</option>
-          <option value="image">Image</option>
-          <option value="video">Video</option>
-        </select><br/><br/>
-        <label>Insert content: </label>
-        {type === "text" && 
-          <input type="text" placeholder="write anything..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }
-        {type === "image" && 
-          <input type="text" placeholder="google.com/d3423431..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }
-        {type === "video" && 
-          <input type="text" placeholder="youtube.com/..." name="content" required="true" reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-        }        
-        <br/><br/>
-        <button disabled={isLoading}>Upload</button>
-      </form>
+      <div className="uploadAndInfoContainer">
+        <form className="upload" onSubmit={getLength}>
+          <div className="uploadFormTitle">Upload to the Info Screen</div>
+          <label>Choose a type: </label>
+          <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
+            <option value="text">Text</option>
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select><br/><br/>
+          <label for="content">Insert content: </label><br></br>
+          {type === "text" && 
+            <textarea cols={45} rows={4} maxLength="100" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></textarea>
+          }
+          {type === "image" && 
+            <input type="text" placeholder="google.com/d3423431..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          }
+          {type === "video" && 
+            <input type="text" placeholder="youtube.com/..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
+          }        
+          <br/><br/>
+          <button disabled={isLoading}>Upload</button>
+        </form>
+
+        <div className="info">
+          
+          <h1 className="uploadFormTitle">How to upload</h1>
+          <p>First choose a type in the box to the left, either text, image or video.</p>
+
+          <p>If you chose text, write anything you want to show up on the info screen.</p>
+          <p>
+            If you chose image, find an image on the internett and copy the image address into the input field 
+            &#40; make sure its the image address and not the website address	&#41;.
+          </p>
+          <p>
+            If you chose video, find a video on youtube and copy the URL into the input field.
+          </p>
+
+          <p>After choosing a type and filling in the input field, click the upload button or press enter.</p>
+
+
+        </div>
+
+      </div>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
-      <br /><br />
 
 
-      <h2>Order of elements on info screen</h2>
-      {elements && elements.map((element) => (
-        <div className="elementPreview" key={element._id}>
-          {element.type === "text" && 
-            <div className="orderElement">
-              <input className="orderNumberInput" defaultValue={element.order} type="number"></input>
-              {editing === element._id 
-                ? // if editing
-                  <>
-                    <p><p className="fieldName">Type: </p>Text</p>
-                    
-                      <p><p className="fieldName">Top text: </p>
-                      <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-                      <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p> 
-                    
-
-                    <p><p className="fieldName">Body text: </p>
-                      <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
-                    </p>
-
-                      <p><p className="fieldName">Bottom text: </p>
-                      <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-                      <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
-                    
-                    <p><p className="fieldName">Duration: </p>
-                      <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
-                      </input> seconds</p>
-
-                      <p className="orderNumber">{element.order}/{elements.length}</p>
-
-                      <button className="save" disabled={isLoading} onClick={() => {
-                          updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
-                      }}>Save</button>
-                      <button className="cancel" disabled={isLoading} onClick={() => {
-                        setEditing(null)
-                        resetUpdateStates()
-                      }}>Cancel</button>
-                  </>
-                : // if not editing
-                  <>
-                    
-                    <p><p className="fieldName">Type: </p>Text</p>
-                    {element.topText && 
-                      <p><p className="fieldName">Top text: </p>{element.topText}</p>
-                    }
-                    
-                    <p><p className="fieldName">Body text: </p>{element.value}</p>
-                    {element.bottomText && 
-                      <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>
-                    }
-                    <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
-                    <p className="orderNumber">{element.order}/{elements.length}</p>
-
-                    <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
-                    <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
-                  </>
-              }
-            </div>
-          }
-          {element.type === "image" && 
-            <div className="orderElement">
-              <input className="orderNumberInput" value={element.order} type="number"></input>
-              {editing === element._id 
-              ? // if editing
+      <h2 className="orderTitle">Order of elements on info screen</h2>
+      <div className="cardContainer">
+        {elements && elements.map((element) => (
+          <div className="elementCard" key={element._id}>
+            {element.type === "text" ?  // TEXT TYPE
               <>
-                <p><p className="fieldName">Type: </p>Image</p>
-
-                <p><p className="fieldName">Top text: </p>
-                  <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-                <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p>
-
-                <p><p className="fieldName">Image URL: </p>
-                  <input className="editInput" defaultValue={element.value} placeholder="https://picsum.photos/" onChange={(e) => setUpdateContent(e.target.value)}></input>
-                </p>
-
-                <p><p className="fieldName">Bottom text: </p>
-                <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-                <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
-                    
-                <p><p className="fieldName">Duration: </p>
-                <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
-                </input> seconds</p>
-
+              {editing === element._id ? // if editing TEXT TYPE
+                <>
+                <div><p className="fieldName">Type: </p>Text</div>
+                <p className="fieldName">Top text: </p>
+                <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+                <p className="fieldName">Body text: </p>
+                <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+                <p className="fieldName">Bottom text: </p>
+                <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+                <div><p className="fieldName">Duration: </p>
+                  <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
+                </input> seconds</div>
                 <p className="orderNumber">{element.order}/{elements.length}</p>
-
                 <button className="save" disabled={isLoading} onClick={() => {
                     updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
                 }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
-                  setEditing(null)
                   resetUpdateStates()
                 }}>Cancel</button>
-
-              </>
-              : // if not editing 
-              <>
-                <p><p className="fieldName">Type: </p>Image</p>
-
-                {element.topText && 
-                  <p><p className="fieldName">Top text: </p>{element.topText}</p>
-                }
-                <img src={element.value} alt="Incorrect url" width="100" height="100"></img>
-                {element.bottomText && 
-                  <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>
-                }
-                <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+                </>
+              :     //  if not editing TEXT TYPE
+                <>
+                {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+                {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
+                <div><p className="fieldName">Type: </p>Text</div>
+                {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+                <div><p className="fieldName">Body Text: </p>{element.value}</div>
+                {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+                <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
                 <p className="orderNumber">{element.order}/{elements.length}</p>
                 <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
                 <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
+                </>
+              }
+
+              </>
+            : element.type === "image" ? // IMAGE TYPE
+              <>
+              {editing === element._id ? // if editing IMAGE TYPE
+              <>
+              <div><p className="fieldName">Type: </p>Image</div>
+              <p className="fieldName">Top text: </p>
+              <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <p className="fieldName">Image URL: </p>
+              <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+              <p className="fieldName">Bottom text: </p>
+              <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <div><p className="fieldName">Duration: </p>
+                <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
+              </input> seconds</div>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="save" disabled={isLoading} onClick={() => {
+                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+              }}>Save</button>
+              <button className="cancel" disabled={isLoading} onClick={() => {
+                resetUpdateStates()
+              }}>Cancel</button>
+              </>
+              : // if not editing IMAGE TYPE
+              <>
+              {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
+              <div><p className="fieldName">Type: </p>Image</div>
+              {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+              <p className="fieldName">Image: </p>
+              <img className="elementImage" alt={"Image from index " + element.order} src={element.value}></img>
+              {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+              <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
+              <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
               </>
               }
-              
-            </div>
-          }
-          {element.type === "video" && 
-            <div className="orderElement">
-              <input className="orderNumberInput" value={element.order} type="number"></input>
-              {editing === element._id 
-              ? // if editing
+
+                
+              </>
+            : element.type === "video" ? // VIDEO TYPE
               <>
-                <p><p className="fieldName">Type: </p>Video</p>
-
-                <p><p className="fieldName">Top text: </p>
-                  <input className="editInput" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-                <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want top text</p></p>
-
-                <p><p className="fieldName">Youtube video URL: </p>
-                  <input className="editInput" defaultValue={element.value} placeholder="youtube.com/..." onChange={(e) => setUpdateContent(e.target.value)}></input>
-                </p>
-
-                <p><p className="fieldName">Bottom text: </p>
-                <input className="editInput" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-                <p className="toolTip"> &lt;&lt;&lt; Leave this empty if you dont want bottom text</p></p>
-                    
-                <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
-
-                <p className="orderNumber">{element.order}/{elements.length}</p>
-
-                <button className="save" disabled={isLoading} onClick={() => {
+              {editing === element._id ? // if editing VIDEO TYPE
+              <>
+              <div><p className="fieldName">Type: </p>Video</div>
+              <p className="fieldName">Top text: </p>
+              <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
+              <p className="fieldName">Youtube Video URL: </p>
+              <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+              <p className="fieldName">Bottom text: </p>
+              <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+              <div><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</div>
+              <p className="orderNumber">{element.order}/{elements.length}</p>
+              <button className="save" disabled={isLoading} onClick={() => {
                   updateElement({id: editing, topText, value: updateContent, bottomText, duration: 0 })
                 }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
                   setEditing(null)
                   resetUpdateStates()
                 }}>Cancel</button>
-
-
               </>
-              : // if not editing
+              : // if not editing VIDOE TYPE
               <>
-              <p><p className="fieldName">Type: </p>Video</p>
-              {element.topText && 
-                <p><p className="fieldName">Top text: </p>{element.topText}</p>
-              }
-
-              <YouTube 
-                videoId={element.value.split("?v=")[1].split("&")[0]} 
-                opts={{height: "216px", width: "384px"}}
-              />
-
-              {element.bottomText && 
-                <p><p className="fieldName">Bottom text: </p>{element.bottomText}</p>
-              }
-              <p><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</p>
+              {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
+              {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
+              <div><p className="fieldName">Type: </p>Video</div>
+              {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
+              <p className="fieldName">Video: </p>
+                <YouTube className="elementVideo"
+                  videoId={element.value.split("?v=")[1].split("&")[0]} 
+                  opts={{height: "162px", width: "288px"}}
+                />
+              {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
+              <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
               <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
               </>
               }
-            </div>
-          }
-        </div>
-      ))}
+                
+              </>
+            : <>Unknown Element</> // if type is unknown
+          
+            }
+          </div>
+        ))}
+      </div>
 
       {checkDuration && 
         <YouTube
-          videoId={elementContent.split("?v=")[1].split("&")[0]}
+          videoId={checkVideoId()}
           opts={{height: "0", width: "0"}}
           onReady={playerReady}
         />

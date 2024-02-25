@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import YouTube from "react-youtube"
+import { ReactFitty } from "react-fitty";
 
 function App() {
   const [elements, setElements] = useState([])
@@ -79,22 +80,22 @@ function App() {
                 {(currentElement.topText && currentElement.bottomText) 
                 ? // if topText and bottomText is true
                   <div className="bottomAndTopText">
-                    <p>{currentElement.topText}</p>
+                    <ReactFitty maxSize="200px">{currentElement.topText}</ReactFitty>
                     <img src={currentElement.value} alt="current element"></img>
-                    <p>{currentElement.bottomText}</p>
+                    <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                   </div>
                 : // if one or both are false
                   <>
                   {(currentElement.topText && !currentElement.bottomText) &&
                     <div className="topText">
-                      <p>{currentElement.topText}</p>
+                      <ReactFitty maxSize="200px">{currentElement.topText}</ReactFitty>
                       <img src={currentElement.value} alt="current element"></img>
                     </div>
                   }
                   {(!currentElement.topText && currentElement.bottomText) &&
                     <div className="bottomText">
                       <img src={currentElement.value} alt="current element"></img>
-                      <p>{currentElement.bottomText}</p>
+                      <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                     </div>
                   }
                   {(!currentElement.topText && !currentElement.bottomText) &&
@@ -111,10 +112,9 @@ function App() {
 
             {currentElement.type === "text" && 
               <div className="bottomAndTopText">
-                <p>{currentElement.topText}</p>
-                <p>{currentElement.value}</p>
-                <p>{currentElement.bottomText}</p>
-                
+                <ReactFitty maxSize="200px">{currentElement.topText}</ReactFitty>
+                <p><ReactFitty maxSize="600px">{currentElement.value}</ReactFitty></p>
+                <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
               </div>
             }
 
@@ -125,18 +125,18 @@ function App() {
                 {(currentElement.topText && currentElement.bottomText)
                 ?
                   <div className="bottomAndTopText">
-                    <p>{currentElement.topText}</p>
+                    <ReactFitty maxSize="200px">{currentElement.topText}</ReactFitty>
                     <YouTube
                       videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                       opts={opts}
                     />
-                    <p>{currentElement.bottomText}</p>
+                    <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                   </div>
                 : 
                   <>
                     {(currentElement.topText && !currentElement.bottomText) &&
                       <div className="topText">
-                        <p>{currentElement.topText}</p>
+                        <ReactFitty maxSize="200px">{currentElement.topText}</ReactFitty>
                         <YouTube
                           videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                           opts={opts}
@@ -150,7 +150,7 @@ function App() {
                           videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                           opts={opts}
                         />
-                        <p>{currentElement.bottomText}</p>
+                        <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                       </div>
                     }
 
