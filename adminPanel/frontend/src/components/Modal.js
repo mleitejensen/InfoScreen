@@ -19,7 +19,7 @@ const Modal = ({getLength, setType, type, setElementContent, isLoading, setUploa
                 <option value="image">Image</option>
                 <option value="video">Video</option>
             </select><br/><br/>
-            <label for="content">Insert content: </label><br></br>
+            <label>Insert content: </label><br></br>
             {type === "text" && 
                 <textarea cols={45} rows={4} maxLength="100" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></textarea>
             }
