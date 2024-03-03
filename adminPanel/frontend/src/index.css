@@ -53,10 +53,12 @@ header a {
   background-color: var(--primary);
   color: var(--text);
   font-size: 15px;
+  transition: background-color 0.1s linear;
 }
 
 * button:hover{
   cursor: pointer;
+  background-color: var(--tertiary);
 }
 
 * button:disabled{
@@ -124,6 +126,29 @@ header a {
 }
 
 /* Order Page */
+
+.order button{
+  transition: background-color 0.1s linear;
+}
+.order button:hover{
+  background-color: var(--tertiary);
+}
+
+.info{
+  margin:  10px auto;
+  width: 400px;
+}
+.info h1{
+  font-weight: bold;
+}
+.info button{
+  font-size: 25px;
+  background-color: var(--success);
+  position: relative;
+  left: 50%;
+  translate: -100%;
+}
+
 
 .blur{
   position: absolute;

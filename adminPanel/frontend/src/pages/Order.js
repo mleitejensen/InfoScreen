@@ -195,8 +195,11 @@ const Order = () => {
   return (
     <div className="order">
 
-
-      <button onClick={() => setUpload(true)}>Upload</button>
+      <div className="info">
+        <h1>Click below to upload</h1>
+        <p>Here you can upload text, pictures and youtube videos. <br></br> Want to try? Click the upload button below</p>
+        <button onClick={() => setUpload(true)}>Upload</button>
+      </div>
       {upload && 
       <>
         <Modal
