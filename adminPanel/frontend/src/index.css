@@ -178,7 +178,7 @@ header a {
   box-shadow: 3px 3px 15px var(--tertiary);
   border-radius: 5px;
   width: 40%;
-  height: 50%;
+  height: 60%;
   padding: 30px;
   top: 50%;
   left: 50%;
@@ -234,10 +234,20 @@ header a {
   position: absolute;
   font-size: 20px;
   padding: 5px 10px;
-  background-color: rgb(26, 131, 99);
+  background-color: var(--success);
   margin: 10px 0px;
   bottom: 10px;
 }
+.upload .cancel{
+  position: absolute;
+  font-size: 20px;
+  padding: 5px 10px;
+  background-color: var(--error);
+  margin: 10px 0px;
+  bottom: 10px;
+  left: 250px;
+}
+
 .upload button:disabled{
   background-color: var(--tertiary);
 }
@@ -266,12 +276,16 @@ header a {
 }
 
 .field{
-  margin: 15px 0px;
+  margin: 15px 0 0 0;
 }
 
 .fieldName{
   display: inline;
   color: var(--change);
+}
+
+.upload .duration{
+  width: 100px;
 }
 
 .editInput{
