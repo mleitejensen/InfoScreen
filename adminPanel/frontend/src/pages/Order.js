@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import YouTube from "react-youtube"
+import Modal from "../components/Modal"
 
 const Order = () => {
+  const [upload, setUpload] = useState(null)
   const [elements, setElements] = useState()
   const [elementContent, setElementContent] = useState('')
   const [type, setType] = useState('text')
@@ -178,32 +180,37 @@ const Order = () => {
     }
   }
 
+  const SetType = (e) => {
+    setType(e)
+  }
+
+  const SetElementContent = (e) => {
+    setElementContent(e)
+  }
+
+  const SetUpload = (e) => {
+    setUpload(e)
+  }
+
   return (
     <div className="order">
-      <div className="uploadAndInfoContainer">
-        <form className="upload" onSubmit={getLength}>
-          <div className="uploadFormTitle">Upload to the Info Screen</div>
-          <label>Choose a type: </label>
-          <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
-            <option value="text">Text</option>
-            <option value="image">Image</option>
-            <option value="video">Video</option>
-          </select><br/><br/>
-          <label for="content">Insert content: </label><br></br>
-          {type === "text" && 
-            <textarea cols={45} rows={4} maxLength="100" placeholder="write anything..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></textarea>
-          }
-          {type === "image" && 
-            <input type="text" placeholder="google.com/d3423431..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-          }
-          {type === "video" && 
-            <input type="text" placeholder="youtube.com/..." name="content" required={true} reset="true" onChange={(e) => setElementContent(e.target.value)}></input>
-          }        
-          <br/><br/>
-          <button disabled={isLoading}>Upload</button>
-        </form>
 
-      </div>
+
+      <button onClick={() => setUpload(true)}>Upload</button>
+      {upload && 
+      <>
+        <Modal
+          getLength={getLength}
+          setType={SetType}
+          type={type}
+          setElementContent={SetElementContent}
+          isLoading={isLoading}
+          setUpload={SetUpload}
+        ></Modal>
+      </>
+      }
+
+
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
 
