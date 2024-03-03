@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
+import '../nav.css';
 
 const Navbar = () => {
   const { user } = useAuthContext()
@@ -15,10 +16,10 @@ const Navbar = () => {
         {user && (
           <nav>
           <Link to="/users">
-            <h1>Users</h1>
+            <h1 className='navLink'>Users</h1>
           </Link>
           <Link to="/order">
-            <h1>Info Screen Order</h1>
+            <h1 className='navLink'>Info Screen Order</h1>
           </Link>
         
               <div className='username'>

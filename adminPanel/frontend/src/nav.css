@@ -1,0 +1,7 @@
+.navLink{
+    transition: color 0.1s linear;
+}
+
+.navLink:hover{
+    color: black;
+}
