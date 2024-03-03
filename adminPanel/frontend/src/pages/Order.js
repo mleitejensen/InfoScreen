@@ -196,9 +196,9 @@ const Order = () => {
     <div className="order">
 
       <div className="info">
-        <h1>Click below to upload</h1>
+        <h1>Upload to the Info Screen</h1>
         <p>Here you can upload text, pictures and youtube videos. <br></br> Want to try? Click the upload button below</p>
-        <button onClick={() => setUpload(true)}>Upload</button>
+        <button onClick={() => {setType("text"); setUpload(true);}}>Upload</button>
       </div>
       {upload && 
       <>
@@ -226,14 +226,14 @@ const Order = () => {
               <>
               {editing === element._id ? // if editing TEXT TYPE
                 <>
-                <div><p className="fieldName">Type: </p>Text</div>
-                <p className="fieldName">Top text: </p>
+                <div className="field"><p className="fieldName">Type: </p>Text</div>
+                <div className="field"><p className="fieldName">Top text: </p></div>
                 <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-                <p className="fieldName">Body text: </p>
+                <div className="field"><p className="fieldName">Body text: </p></div>
                 <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
-                <p className="fieldName">Bottom text: </p>
+                <div className="field"><p className="fieldName">Bottom text: </p></div>
                 <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-                <div><p className="fieldName">Duration: </p>
+                <div className="field"><p className="fieldName">Duration: </p>
                   <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
                 </input> seconds</div>
                 <p className="orderNumber">{element.order}/{elements.length}</p>
@@ -248,11 +248,11 @@ const Order = () => {
                 <>
                 {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
                 {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
-                <div><p className="fieldName">Type: </p>Text</div>
-                {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
-                <div><p className="fieldName">Body Text: </p>{element.value}</div>
-                {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
-                <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
+                <div className="field"><p className="fieldName">Type: </p>Text</div>
+                {element.topText && <div className="field"><p className="fieldName">Top Text: </p>{element.topText}</div>}
+                <div className="field"><p className="fieldName">Body Text: </p>{element.value}</div>
+                {element.bottomText && <div className="field"><p className="fieldName">Bottom Text: </p>{element.bottomText}</div>}
+                <div className="field"><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
                 <p className="orderNumber">{element.order}/{elements.length}</p>
                 <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
                 <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
@@ -264,14 +264,14 @@ const Order = () => {
               <>
               {editing === element._id ? // if editing IMAGE TYPE
               <>
-              <div><p className="fieldName">Type: </p>Image</div>
-              <p className="fieldName">Top text: </p>
+              <div className="field"><p className="fieldName">Type: </p>Image</div>
+              <div className="field"><p className="fieldName">Top text: </p></div>
               <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-              <p className="fieldName">Image URL: </p>
+              <div className="field"><p className="fieldName">Image URL: </p></div>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
-              <p className="fieldName">Bottom text: </p>
+              <div className="field"><p className="fieldName">Bottom text: </p></div>
               <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-              <div><p className="fieldName">Duration: </p>
+              <div className="field"><p className="fieldName">Duration: </p>
                 <input className="duration" defaultValue={element.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
               </input> seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
@@ -286,12 +286,12 @@ const Order = () => {
               <>
               {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
               {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
-              <div><p className="fieldName">Type: </p>Image</div>
-              {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
-              <p className="fieldName">Image: </p>
+              <div className="field"><p className="fieldName">Type: </p>Image</div>
+              {element.topText && <div className="field"><p className="fieldName">Top Text: </p>{element.topText}</div>}
+              <div className="field"><p className="fieldName">Image: </p></div>
               <img className="elementImage" alt={"Image from index " + element.order} src={element.value}></img>
-              {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
-              <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
+              {element.bottomText && <div className="field"><p className="fieldName">Bottom Text: </p>{element.bottomText}</div>}
+              <div className="field"><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
               <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>
@@ -304,14 +304,14 @@ const Order = () => {
               <>
               {editing === element._id ? // if editing VIDEO TYPE
               <>
-              <div><p className="fieldName">Type: </p>Video</div>
-              <p className="fieldName">Top text: </p>
+              <div className="field"><p className="fieldName">Type: </p>Video</div>
+              <div className="field"><p className="fieldName">Top text: </p></div>
               <input className="editInput" maxLength="100" defaultValue={element.topText} onChange={(e) => setTopText(e.target.value)}></input>
-              <p className="fieldName">Youtube Video URL: </p>
+              <div className="field"><p className="fieldName">Youtube Video URL: </p></div>
               <input className="editInput" defaultValue={element.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
-              <p className="fieldName">Bottom text: </p>
+              <div className="field"><p className="fieldName">Bottom text: </p></div>
               <input className="editInput" maxLength="100" defaultValue={element.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
-              <div><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</div>
+              <div className="field"><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
                   updateElement({id: editing, topText, value: updateContent, bottomText, duration: 0 })
@@ -325,15 +325,15 @@ const Order = () => {
               <>
               {element.order > 1 && <button className="leftArrow" onClick={() => {updateOrder(element._id, "down")}}>&#8592;</button>}
               {element.order < elements.length && <button className="rightArrow" onClick={() => {updateOrder(element._id, "up")}}>&#8594;</button>}
-              <div><p className="fieldName">Type: </p>Video</div>
-              {element.topText && <p><p className="fieldName">Top Text: </p>{element.topText}</p>}
-              <p className="fieldName">Video: </p>
+              <div className="field"><p className="fieldName">Type: </p>Video</div>
+              {element.topText && <div className="field"><p className="fieldName">Top Text: </p>{element.topText}</div>}
+              <div className="field"><p className="fieldName">Video: </p></div>
                 <YouTube className="elementVideo"
                   videoId={element.value.split("?v=")[1].split("&")[0]} 
                   opts={{height: "162px", width: "288px"}}
                 />
-              {element.bottomText && <p><p className="fieldName">Bottom Text: </p>{element.bottomText}</p>}
-              <div><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
+              {element.bottomText && <div className="field"><p className="fieldName">Bottom Text: </p>{element.bottomText}</div>}
+              <div className="field"><p className="fieldName">Duration: </p>{element.duration / 1000} Seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="delete" disabled={isLoading} onClick={() => {deleteElement(element._id)}}>Delete</button>
               <button className="edit" disabled={isLoading} onClick={() => {startEditing(element)}}>Edit</button>

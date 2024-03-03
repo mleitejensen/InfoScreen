@@ -135,18 +135,26 @@ header a {
 }
 
 .info{
+  position: relative;
   margin:  10px auto;
-  width: 400px;
+  width: 500px;
+  border-radius: 4px;
+  border: 2px solid var(--secondary);
+  padding: 10px 20px;
 }
 .info h1{
+  text-align: center;
   font-weight: bold;
+}
+.info p{
+  font-size: 20px;
 }
 .info button{
   font-size: 25px;
   background-color: var(--success);
   position: relative;
   left: 50%;
-  translate: -100%;
+  translate: -50%;
 }
 
 
@@ -169,7 +177,7 @@ header a {
   background-color: var(--tertiary);
   box-shadow: 3px 3px 15px var(--tertiary);
   border-radius: 5px;
-  width: 50%;
+  width: 40%;
   height: 50%;
   padding: 30px;
   top: 50%;
@@ -186,13 +194,17 @@ header a {
   background-color: var(--error);
   margin: 10px 0px;
   bottom: 10px;
-  left: 30%;
+  left: 40%;
 
 }
 
 .uploadFormTitle{
   font-size: 40px;
   margin: 20px 0px;
+}
+.upload{
+  width: 500px;
+  margin: auto;
 }
 
 .upload select{
@@ -251,6 +263,10 @@ header a {
 
 .orderTitle{
   margin: 20px 0px;
+}
+
+.field{
+  margin: 15px 0px;
 }
 
 .fieldName{
