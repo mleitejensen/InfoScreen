@@ -127,7 +127,7 @@ const Order = () => {
 
 
   const startEditing = ((element) => {
-    setEditing(element._id)
+    setEditing(element)
     setTopText(element.topText)
     setUpdateContent(element.value)
     setBottomText(element.bottomText)
@@ -192,6 +192,26 @@ const Order = () => {
     setUpload(e)
   }
 
+  const SetTopText = (e) => {
+    setTopText(e)
+  }
+
+  const SetBottomText = (e) => {
+    setBottomText(e)
+  }
+
+  const SetUpdateContent = (e) => {
+    setUpdateContent(e)
+  }
+  const SetUpdateDuration = (e) => {
+    setUpdateDuration(e)
+  }
+
+  const SetEditing = (e) => {
+    setEditing(e)
+  }
+
+
   return (
     <div className="order">
 
@@ -208,11 +228,28 @@ const Order = () => {
           type={type}
           setElementContent={SetElementContent}
           isLoading={isLoading}
+          upload={upload}
           setUpload={SetUpload}
         ></Modal>
       </>
       }
 
+      {editing && 
+        <Modal
+          editing={editing}
+          setEditing={SetEditing}
+          setTopText={SetTopText}
+          setUpdateContent={SetUpdateContent}
+          setBottomText={SetBottomText}
+          setUpdateDuration={SetUpdateDuration}
+          updateElement={updateElement}
+          topText={topText}
+          updateContent={updateContent}
+          bottomText={bottomText}
+          updateDuration={updateDuration}
+          resetUpdateStates={resetUpdateStates}
+        ></Modal>
+      }
 
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
@@ -224,7 +261,7 @@ const Order = () => {
           <div className="elementCard" key={element._id}>
             {element.type === "text" ?  // TEXT TYPE
               <>
-              {editing === element._id ? // if editing TEXT TYPE
+              {editing?._id === element._id ? // if editing TEXT TYPE
                 <>
                 <div className="field"><p className="fieldName">Type: </p>Text</div>
                 <div className="field"><p className="fieldName">Top text: </p></div>
@@ -238,7 +275,7 @@ const Order = () => {
                 </input> seconds</div>
                 <p className="orderNumber">{element.order}/{elements.length}</p>
                 <button className="save" disabled={isLoading} onClick={() => {
-                    updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+                    updateElement({id: editing._id, topText, value: updateContent, bottomText, duration: updateDuration })
                 }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
                   resetUpdateStates()
@@ -262,7 +299,7 @@ const Order = () => {
               </>
             : element.type === "image" ? // IMAGE TYPE
               <>
-              {editing === element._id ? // if editing IMAGE TYPE
+              {editing?._id === element._id ? // if editing IMAGE TYPE
               <>
               <div className="field"><p className="fieldName">Type: </p>Image</div>
               <div className="field"><p className="fieldName">Top text: </p></div>
@@ -276,7 +313,7 @@ const Order = () => {
               </input> seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
-                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+                  updateElement({id: editing._id, topText, value: updateContent, bottomText, duration: updateDuration })
               }}>Save</button>
               <button className="cancel" disabled={isLoading} onClick={() => {
                 resetUpdateStates()
@@ -302,7 +339,7 @@ const Order = () => {
               </>
             : element.type === "video" ? // VIDEO TYPE
               <>
-              {editing === element._id ? // if editing VIDEO TYPE
+              {editing?._id === element._id ? // if editing VIDEO TYPE
               <>
               <div className="field"><p className="fieldName">Type: </p>Video</div>
               <div className="field"><p className="fieldName">Top text: </p></div>
@@ -314,7 +351,7 @@ const Order = () => {
               <div className="field"><p className="fieldName">Duration: </p>{element.duration / 1000} seconds</div>
               <p className="orderNumber">{element.order}/{elements.length}</p>
               <button className="save" disabled={isLoading} onClick={() => {
-                  updateElement({id: editing, topText, value: updateContent, bottomText, duration: 0 })
+                  updateElement({id: editing._id, topText, value: updateContent, bottomText, duration: 0 })
                 }}>Save</button>
                 <button className="cancel" disabled={isLoading} onClick={() => {
                   setEditing(null)

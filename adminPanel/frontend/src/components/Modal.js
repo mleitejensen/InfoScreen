@@ -1,12 +1,33 @@
-const Modal = ({getLength, setType, type, setElementContent, isLoading, setUpload}) => {
+const Modal = ({getLength, setType, type, element, setElementContent, isLoading, upload, setUpload, 
+    editing, 
+    setTopText, 
+    setUpdateContent, 
+    setBottomText, 
+    setUpdateDuration, 
+    updateElement, 
+    topText, 
+    updateContent, 
+    bottomText, 
+    updateDuration, 
+    resetUpdateStates,
+    setEditing
 
-    const closeModal = () => {
+}) => {
+
+    const closeUpload = () => {
         setUpload(false)
+    }
+    const closeEditing = () => {
+        setEditing(false)
     }
 
     return(
         <>
-        <div className="blur" onClick={() => closeModal()}>
+
+
+        {upload &&
+        <>
+        <div className="blur" onClick={() => closeUpload()}>
         <div className="uploadContainer" onClick={(e) => e.stopPropagation()}>
             <form className="upload" onSubmit={(e) => {
                 setUpload(false)
@@ -36,6 +57,37 @@ const Modal = ({getLength, setType, type, setElementContent, isLoading, setUploa
             <button className="Close" onClick={() => setUpload(false)}>Close</button>
         </div>
         </div>
+        </>
+        }
+
+        {editing && 
+        <>
+        <div className="blur" onClick={() => closeEditing()}>
+        <div className="uploadContainer" onClick={(e) => e.stopPropagation()}>
+            <div className="field"><p className="fieldName">Type: </p>Text</div>
+            <div className="field"><p className="fieldName">Top text: </p></div>
+            <input className="editInput" maxLength="100" defaultValue={editing.topText} onChange={(e) => setTopText(e.target.value)}></input>
+            <div className="field"><p className="fieldName">Body text: </p></div>
+            <input className="editInput" defaultValue={editing.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
+            <div className="field"><p className="fieldName">Bottom text: </p></div>
+            <input className="editInput" maxLength="100" defaultValue={editing.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
+            <div className="field"><p className="fieldName">Duration: </p>
+                <input className="duration" defaultValue={editing.duration / 1000} type="number" onChange={(e) => setUpdateDuration(e.target.value * 1000)}>
+            </input> seconds</div>
+            <button className="save" disabled={isLoading} onClick={() => {
+                updateElement({id: editing, topText, value: updateContent, bottomText, duration: updateDuration })
+            }}>Save</button>
+            <button className="cancel" disabled={isLoading} onClick={() => {
+                resetUpdateStates()
+            }}>Cancel</button>
+
+            <button className="Close" onClick={() => setEditing(false)}>Close</button>
+        </div>
+        </div>
+        </>
+        }
+
+
         </>
     )
 }
