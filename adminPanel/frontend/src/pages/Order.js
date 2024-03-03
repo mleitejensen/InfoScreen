@@ -203,25 +203,6 @@ const Order = () => {
           <button disabled={isLoading}>Upload</button>
         </form>
 
-        <div className="info">
-          
-          <h1 className="uploadFormTitle">How to upload</h1>
-          <p>First choose a type in the box to the left, either text, image or video.</p>
-
-          <p>If you chose text, write anything you want to show up on the info screen.</p>
-          <p>
-            If you chose image, find an image on the internett and copy the image address into the input field 
-            &#40; make sure its the image address and not the website address	&#41;.
-          </p>
-          <p>
-            If you chose video, find a video on youtube and copy the URL into the input field.
-          </p>
-
-          <p>After choosing a type and filling in the input field, click the upload button or press enter.</p>
-
-
-        </div>
-
       </div>
       {error && <div className="error">{error}</div>}
       {result && <div className="result">{result}</div>}
