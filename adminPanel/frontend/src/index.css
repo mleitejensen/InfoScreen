@@ -11,7 +11,7 @@
 }
 
 *{
-  font-family: Verdana, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -53,10 +53,12 @@ header a {
   background-color: var(--primary);
   color: var(--text);
   font-size: 15px;
+  transition: background-color 0.1s linear;
 }
 
 * button:hover{
   cursor: pointer;
+  background-color: var(--tertiary);
 }
 
 * button:disabled{
@@ -64,7 +66,7 @@ header a {
 }
 
 .pages{
-  max-width: 1400px;
+  max-width: 1600px;
   padding: 10px;
   margin: 0 auto;
 }
@@ -125,36 +127,84 @@ header a {
 
 /* Order Page */
 
-.uploadAndInfoContainer{
-  display: grid;
-  grid-template-columns: 600px 600px;
-  grid-gap: 200px;
+.order button{
+  transition: background-color 0.1s linear;
+}
+.order button:hover{
+  background-color: var(--tertiary);
 }
 
 .info{
-  background-color: var(--tertiary);
-  box-shadow: 1px 1px 20px var(--tertiary);
-  border-radius: 5px;
-  padding: 10px;
-  overflow: auto;
-  max-height: 300px;
+  position: relative;
+  margin:  10px auto;
+  width: 500px;
+  border-radius: 4px;
+  border: 2px solid var(--secondary);
+  padding: 10px 20px;
+}
+.info h1{
+  text-align: center;
+  font-weight: bold;
+}
+.info p{
+  font-size: 20px;
+}
+.info button{
+  font-size: 25px;
+  background-color: var(--success);
+  position: relative;
+  left: 50%;
+  translate: -50%;
 }
 
-.upload{
+
+.blur{
+  position: absolute;
+  top: 87px;
+  left: 0;
+  width: 100%;
+  height: 91.8%;
+  background-color: #00000077;
+  border-radius: 4px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.uploadContainer{
   position: relative;
+  z-index: 4;
   display: flexbox;
   background-color: var(--tertiary);
   box-shadow: 3px 3px 15px var(--tertiary);
   border-radius: 5px;
-  width: 600px;
-  height: 300px;
-  padding: 10px;
+  width: 40%;
+  height: 60%;
+  padding: 30px;
+  top: 50%;
+  left: 50%;
+  translate: -50%;
+  transform: translateY(-50%);
+}
+
+
+.Close{
+  position: absolute;
+  font-size: 20px;
+  padding: 5px 10px;
+  background-color: var(--error);
+  margin: 10px 0px;
+  bottom: 10px;
+  left: 40%;
+
 }
 
 .uploadFormTitle{
-  font-size: 30px;
-  text-align: center;
-  margin: 10px 0px;
+  font-size: 40px;
+  margin: 20px 0px;
+}
+.upload{
+  width: 500px;
+  margin: auto;
 }
 
 .upload select{
@@ -184,10 +234,20 @@ header a {
   position: absolute;
   font-size: 20px;
   padding: 5px 10px;
-  background-color: rgb(26, 131, 99);
+  background-color: var(--success);
   margin: 10px 0px;
   bottom: 10px;
 }
+.upload .cancel{
+  position: absolute;
+  font-size: 20px;
+  padding: 5px 10px;
+  background-color: var(--error);
+  margin: 10px 0px;
+  bottom: 10px;
+  left: 250px;
+}
+
 .upload button:disabled{
   background-color: var(--tertiary);
 }
@@ -215,9 +275,17 @@ header a {
   margin: 20px 0px;
 }
 
+.field{
+  margin: 15px 0 0 0;
+}
+
 .fieldName{
   display: inline;
   color: var(--change);
+}
+
+.upload .duration{
+  width: 100px;
 }
 
 .editInput{

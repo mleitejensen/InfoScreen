@@ -11,7 +11,7 @@ function App() {
   
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:9000/order',);
+      const response = await fetch('http://10.12.6.97/order',);
       let data = await response.json();
       setElements(data)
       console.log(data)
