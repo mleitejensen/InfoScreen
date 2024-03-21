@@ -40,13 +40,11 @@ function App() {
 
   useEffect(() => {
     if(currentElement?.type !== "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
-      setTimeout(function(){
+      setTimeout(() => {
         setIndex(index => index+1)
       }, currentElement.duration)
     } else if(currentElement?.type === "video" && index < ((elements?.length === undefined)? maxElements : elements.length)){
-      setTimeout(function(){
-        setIndex(index => index+1)
-      }, currentElement.duration)
+      // wait on video
     } else{
       setIndex(0);
     }
@@ -66,6 +64,12 @@ function App() {
       mute: 1
     }
   };
+
+  const videoReady = async (e) => {
+    setTimeout(() => {
+      setIndex(index => index+1)
+    }, currentElement.duration)
+  }
 
   
   return (
@@ -129,6 +133,7 @@ function App() {
                     <YouTube
                       videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                       opts={opts}
+                      onReady={videoReady}
                     />
                     <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                   </div>
@@ -140,6 +145,7 @@ function App() {
                         <YouTube
                           videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                           opts={opts}
+                          onReady={videoReady}
                         />
                       </div>
                     }
@@ -149,6 +155,7 @@ function App() {
                         <YouTube
                           videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                           opts={opts}
+                          onReady={videoReady}
                         />
                         <ReactFitty maxSize="200px">{currentElement.bottomText}</ReactFitty>
                       </div>
@@ -158,6 +165,7 @@ function App() {
                       <YouTube
                         videoId={currentElement.value.split("?v=")[1].split("&")[0]}
                         opts={opts}
+                        onReady={videoReady}
                       />
                     }
                   
