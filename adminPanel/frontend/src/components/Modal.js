@@ -1,4 +1,12 @@
-const Modal = ({getLength, setType, type, element, setElementContent, isLoading, upload, setUpload, 
+const Modal = ({
+    getLength, 
+    setType, 
+    type, 
+    element, 
+    setElementContent, 
+    isLoading, 
+    upload, 
+    setUpload, 
     editing, 
     setTopText, 
     setUpdateContent, 
@@ -9,9 +17,8 @@ const Modal = ({getLength, setType, type, element, setElementContent, isLoading,
     updateContent, 
     bottomText, 
     updateDuration, 
-    resetUpdateStates,
+    resetUpdateStates, 
     setEditing
-
 }) => {
 
     const closeUpload = () => {
@@ -66,10 +73,10 @@ const Modal = ({getLength, setType, type, element, setElementContent, isLoading,
         <div className="uploadContainer" onClick={(e) => e.stopPropagation()}>
             <div className="upload">
                 <div className="uploadFormTitle">Editing element</div>
-                <div className="field"><p className="fieldName">Type: </p>Text</div>
+                <div className="field"><p className="fieldName">Type: </p>{editing.type === "text" ? <>Text</> : editing.type === "image" ? <>Image</> : editing.type === "video" ? <>Video</> : <>Undefined type</>}</div>
                 <div className="field"><p className="fieldName">Top text: </p></div>
                 <input className="editInput" maxLength="100" defaultValue={editing.topText} onChange={(e) => setTopText(e.target.value)}></input>
-                <div className="field"><p className="fieldName">Body text: </p></div>
+                <div className="field"><p className="fieldName">{editing.type === "text" ? <>Body text</>: editing.type === "image" ? <>Image URL</> : editing.type === "video" ? <>Vidoe URL</> : <>Undefined type</>} : </p></div>
                 <input className="editInput" defaultValue={editing.value} onChange={(e) => setUpdateContent(e.target.value)}></input>
                 <div className="field"><p className="fieldName">Bottom text: </p></div>
                 <input className="editInput" maxLength="100" defaultValue={editing.bottomText} onChange={(e) => setBottomText(e.target.value)}></input>
